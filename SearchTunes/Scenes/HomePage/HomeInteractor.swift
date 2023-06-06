@@ -33,7 +33,7 @@ final class HomeInteractor {
 
 extension HomeInteractor: HomeInteractorProtocol {
     func fetchTracks() {
-        service.request(.getResults(searchText: "ahmet+kaya"), completion: { [weak self] (result: Result<SearchResult, Error>) in
+        service.request(.getResults(searchText: "Recep+tayyip+erdogan"), completion: { [weak self] (result: Result<SearchResult, Error>) in
             guard self != nil else { return }
             self?.output?.handleTrackResult(result)
         })

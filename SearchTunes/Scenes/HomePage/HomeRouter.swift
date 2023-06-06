@@ -8,7 +8,11 @@
 import UIKit
 
 protocol HomeRouterProtocol {
-    func navigateToDetail()
+    func navigateToDetail(_ route: HomeRoutes)
+}
+
+enum HomeRoutes {
+    case detail(source: Track?)
 }
 
 final class HomeRouter {
@@ -23,19 +27,23 @@ final class HomeRouter {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let view = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as? HomeViewController
         let interactor = HomeInteractor()
-        let router = HomeRouter()
+        let router = HomeRouter(navigationController: view?.navigationController) // Pass the navigation controller
         let presenter = HomePresenter(view: view, interactor: interactor, router: router)
         view?.presenter = presenter
+        router.homeVC = view // Set the homeVC property
         interactor.output = presenter
         return view
-        
     }
+
 }
 
 extension HomeRouter: HomeRouterProtocol {
-    func navigateToDetail() {
-        
+    func navigateToDetail(_ route: HomeRoutes) {
+        switch route {
+        case .detail(let source):
+            let detailVC = DetailViewRouter.createModule()
+            detailVC.track = source
+            homeVC?.navigationController?.pushViewController(detailVC, animated: true)
+        }
     }
-    
-    
 }

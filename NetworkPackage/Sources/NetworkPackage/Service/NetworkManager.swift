@@ -6,9 +6,11 @@
 //
 
 import Foundation
+import UIKit
 
 public protocol NetworkManagerProtocol {
     func request<T: Decodable>(_ endpoint: Endpoint<T>, completion: @escaping (Result<T, Error>) -> Void)
+    func downloadImage(fromURL url: URL, completion: @escaping (UIImage?) -> Void)
 }
 
 public class NetworkManager: NetworkManagerProtocol {
@@ -43,6 +45,7 @@ public class NetworkManager: NetworkManagerProtocol {
         }
         task.resume()
     }
+    
     public func getResults<T: Decodable>(searchText: String, completion: @escaping(Result<T, Error>) -> Void) {
         let endpoint = Endpoint<T>.getResults(searchText: searchText)
         request(endpoint, completion: completion)

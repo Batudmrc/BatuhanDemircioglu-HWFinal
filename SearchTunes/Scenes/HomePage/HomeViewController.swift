@@ -20,6 +20,7 @@ class HomeViewController: UIViewController {
     
     
     @IBOutlet weak var tableView: UITableView!
+    private let service: NetworkManagerProtocol = NetworkManager()
     
     let spinner = UIActivityIndicatorView(style: .large)
     var spinnerBackgroundView: UIView = UIView()
@@ -38,12 +39,24 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         return presenter.numberOfItems
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        presenter.didSelectRowAt(indexPath.row)
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: HomePageTableViewCell.identifier, for: indexPath) as! HomePageTableViewCell
         if let track = self.presenter.track(indexPath.row) {
             cell.trackName.text = track.trackName
             cell.artistName.text = track.artistName
             cell.collectionName.text = track.collectionName
+            
+            let imageURL = URL(string: track.artworkUrl100!)
+            service.downloadImage(fromURL: imageURL!, completion: { [weak self] image in
+                // Use the downloaded image here
+                DispatchQueue.main.async {
+                    cell.coverImageView.image = image
+                }
+            })
             //print("\(track.artistName) - \(track.trackName) - \(track.wrapperType)")
         }
         return cell

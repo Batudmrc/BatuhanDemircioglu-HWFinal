@@ -35,7 +35,8 @@ final class HomePresenter {
 
 extension HomePresenter: HomePresenterProtocol {
     func didSelectRowAt(_ index: Int) {
-        
+        guard let track = track(index) else { return }
+        router?.navigateToDetail(.detail(source: track))
     }
     
     func load() {

@@ -25,6 +25,6 @@ final class SplashViewController: UIViewController {
 
 extension SplashViewController: SplashViewControllerProtocol {
     func noConnection() {
-        
+        print("Connection Yok Dayeee")
     }
 }
