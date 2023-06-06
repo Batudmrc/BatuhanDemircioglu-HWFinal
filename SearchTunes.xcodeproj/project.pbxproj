@@ -63,7 +63,7 @@
 		3B0D3BE22A2E7B870046D441 /* SearchTunesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SearchTunesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B0D3BE62A2E7B870046D441 /* SearchTunesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTunesUITests.swift; sourceTree = "<group>"; };
 		3B0D3BE82A2E7B870046D441 /* SearchTunesUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTunesUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		3B0D3BF52A2E7C840046D441 /* NetworkPackage */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = NetworkPackage; path = ../NetworkPackage; sourceTree = "<group>"; };
+		3B0D3BF52A2E7C840046D441 /* NetworkPackage */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = NetworkPackage; sourceTree = "<group>"; };
 		3B0D3BF62A2E86B00046D441 /* HomeEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeEntity.swift; sourceTree = "<group>"; };
 		3B0D3BFE2A2E9D310046D441 /* HomePageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageTableViewCell.swift; sourceTree = "<group>"; };
 		3B0D3BFF2A2E9D310046D441 /* HomePageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomePageTableViewCell.xib; sourceTree = "<group>"; };
