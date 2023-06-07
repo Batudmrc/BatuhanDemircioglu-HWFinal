@@ -48,18 +48,12 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: HomePageTableViewCell.identifier, for: indexPath) as! HomePageTableViewCell
         cell.coverImageView.image = nil
         if let track = presenter.track(indexPath.row) {
-            cell.trackName.text = track.trackName
-            cell.artistName.text = track.artistName
-            cell.collectionName.text = track.collectionName
-            
-            //cell.configute(model: <#T##HomeCellConfigureModel#>)
-            
-            let imageURL = URL(string: track.artworkUrl100!)
+            cell.cellPresenter = HomePageTableViewCellPresenter(view: cell, tracks: track)
             
             // Show the spinner
             cell.spinner.startAnimating()
             cell.spinner.isHidden = false
-            
+            /*
             // Start the image download operation
             service.downloadImage(fromURL: imageURL!) { image in
                 // Hide the spinner
@@ -74,8 +68,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
                         cell.coverImageView.alpha = 1.0
                     }
                 }
-                
-            }
+            } */
         }
         return cell
     }

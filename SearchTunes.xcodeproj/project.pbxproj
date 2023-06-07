@@ -12,6 +12,7 @@
 		3B024C532A30CED9009BF16E /* FavoritesViewInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B024C522A30CED9009BF16E /* FavoritesViewInteractor.swift */; };
 		3B024C552A30CEE4009BF16E /* FavoritesViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B024C542A30CEE4009BF16E /* FavoritesViewPresenter.swift */; };
 		3B024C572A30CEF2009BF16E /* FavoritesViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B024C562A30CEF2009BF16E /* FavoritesViewRouter.swift */; };
+		3B024C592A311E63009BF16E /* HomePageTableViewCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B024C582A311E63009BF16E /* HomePageTableViewCellPresenter.swift */; };
 		3B0D3BC32A2E7B860046D441 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0D3BC22A2E7B860046D441 /* AppDelegate.swift */; };
 		3B0D3BC52A2E7B860046D441 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0D3BC42A2E7B860046D441 /* SceneDelegate.swift */; };
 		3B0D3BC72A2E7B860046D441 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0D3BC62A2E7B860046D441 /* HomeViewController.swift */; };
@@ -64,6 +65,7 @@
 		3B024C522A30CED9009BF16E /* FavoritesViewInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewInteractor.swift; sourceTree = "<group>"; };
 		3B024C542A30CEE4009BF16E /* FavoritesViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewPresenter.swift; sourceTree = "<group>"; };
 		3B024C562A30CEF2009BF16E /* FavoritesViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewRouter.swift; sourceTree = "<group>"; };
+		3B024C582A311E63009BF16E /* HomePageTableViewCellPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageTableViewCellPresenter.swift; sourceTree = "<group>"; };
 		3B0D3BBF2A2E7B860046D441 /* SearchTunes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SearchTunes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B0D3BC22A2E7B860046D441 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3B0D3BC42A2E7B860046D441 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 			children = (
 				3B0D3BFE2A2E9D310046D441 /* HomePageTableViewCell.swift */,
 				3B0D3BFF2A2E9D310046D441 /* HomePageTableViewCell.xib */,
+				3B024C582A311E63009BF16E /* HomePageTableViewCellPresenter.swift */,
 			);
 			path = HomePage;
 			sourceTree = "<group>";
@@ -415,6 +418,7 @@
 				3B0D3BC32A2E7B860046D441 /* AppDelegate.swift in Sources */,
 				3B0D3C092A2F333D0046D441 /* HomeRouter.swift in Sources */,
 				3B024C572A30CEF2009BF16E /* FavoritesViewRouter.swift in Sources */,
+				3B024C592A311E63009BF16E /* HomePageTableViewCellPresenter.swift in Sources */,
 				3B0D3BC52A2E7B860046D441 /* SceneDelegate.swift in Sources */,
 				3B0D3C1E2A2FDB600046D441 /* DetailViewRouter.swift in Sources */,
 				3B0D3C0D2A2F77C10046D441 /* SplashViewController.swift in Sources */,

@@ -7,6 +7,14 @@
 
 import UIKit
 
+protocol HomePageTableViewCellProtocol: AnyObject {
+    func setCoverImage(_ image: UIImage)
+    func setPlayerImage(_ image:UIImage)
+    func setCollectionName(_ text: String)
+    func setArtistName(_ text: String)
+    func setTrackName(_ text: String)
+}
+
 class HomePageTableViewCell: UITableViewCell {
 
     @IBOutlet weak var spinner: UIActivityIndicatorView!
@@ -17,27 +25,42 @@ class HomePageTableViewCell: UITableViewCell {
     @IBOutlet weak var coverImageView: UIImageView!
     static let identifier = String(describing: HomePageTableViewCell.self)
     
+    var cellPresenter: HomePageTableViewCellPresenterProtocol! {
+        didSet {
+            cellPresenter.load()
+        }
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
     
-    func configute(model: HomeCellConfigureModel) {
-        collectionName.text = model.collectionName
-        artistName.text = model.artistName
-        trackName.text = model.trackName
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
 }
-struct HomeCellConfigureModel {
-    let playerImageView: UIImageView
-    let collectionName: String?
-    let artistName: String?
-    let trackName: String?
-    let coverImageView: String?
+
+extension HomePageTableViewCell: HomePageTableViewCellProtocol {
+    func setCollectionName(_ text: String) {
+        collectionName.text = text
+    }
+    
+    func setCoverImage(_ image: UIImage) {
+        DispatchQueue.main.async {
+            self.coverImageView.image = image
+        }
+    }
+    
+    func setPlayerImage(_ image: UIImage) {
+        
+    }
+    
+    func setArtistName(_ text: String) {
+        artistName.text = text
+    }
+    
+    func setTrackName(_ text: String) {
+        trackName.text = text
+    }
+    
+    
 }
+
