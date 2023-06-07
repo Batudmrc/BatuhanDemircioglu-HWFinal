@@ -16,7 +16,7 @@ protocol HomePageTableViewCellProtocol: AnyObject {
 }
 
 class HomePageTableViewCell: UITableViewCell {
-
+    
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     @IBOutlet weak var playerImageView: UIImageView!
     @IBOutlet weak var collectionName: UILabel!
@@ -33,9 +33,15 @@ class HomePageTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+        self.alpha = 0.0
+        self.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
+        
+        UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5, options: []) {
+            self.alpha = 1.0
+            self.transform = CGAffineTransform.identity
+        }
     }
-    
 }
 
 extension HomePageTableViewCell: HomePageTableViewCellProtocol {

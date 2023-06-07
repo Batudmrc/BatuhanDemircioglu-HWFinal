@@ -14,6 +14,7 @@ protocol HomeViewControllerProtocol: AnyObject {
     func showLoading()
     func hideLoading()
     func reloadData()
+    func setupEmptyView()
 }
 
 class HomeViewController: UIViewController {
@@ -24,9 +25,8 @@ class HomeViewController: UIViewController {
     private let service: NetworkManagerProtocol = NetworkManager()
     
     let spinner = UIActivityIndicatorView(style: .large)
-    var spinnerBackgroundView: UIView = UIView()
-    
     var presenter: HomePresenterProtocol!
+    let messageLabel = UILabel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +37,11 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return presenter.numberOfItems
+        let isEmpty = presenter.numberOfItems == 0
+        UIView.animate(withDuration: 0.8) {
+            self.messageLabel.alpha = isEmpty ? 1.0 : 0.0
+        }
+        return isEmpty ? 0 : presenter.numberOfItems
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -49,32 +53,24 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         cell.coverImageView.image = nil
         if let track = presenter.track(indexPath.row) {
             cell.cellPresenter = HomePageTableViewCellPresenter(view: cell, tracks: track)
-            
-            // Show the spinner
             cell.spinner.startAnimating()
             cell.spinner.isHidden = false
-            /*
-            // Start the image download operation
-            service.downloadImage(fromURL: imageURL!) { image in
-                // Hide the spinner
-                DispatchQueue.main.async {
-                    cell.spinner.stopAnimating()
-                    cell.spinner.isHidden = true
-                    
-                    // Animate the image appearing
-                    cell.coverImageView.alpha = 0.0
-                    cell.coverImageView.image = image
-                    UIView.animate(withDuration: 0.3) {
-                        cell.coverImageView.alpha = 1.0
-                    }
-                }
-            } */
         }
         return cell
     }
 }
 
 extension HomeViewController: HomeViewControllerProtocol, UISearchBarDelegate {
+    func setupEmptyView() {
+        messageLabel.textAlignment = .center
+        messageLabel.textColor = .gray
+        messageLabel.font = UIFont.systemFont(ofSize: 16)
+        messageLabel.text = "No items to display"
+        tableView.addSubview(messageLabel)
+        messageLabel.translatesAutoresizingMaskIntoConstraints = false
+        messageLabel.centerXAnchor.constraint(equalTo: tableView.centerXAnchor).isActive = true
+        messageLabel.centerYAnchor.constraint(equalTo: tableView.centerYAnchor).isActive = true
+    }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         presenter.searchBarTextDidChange(searchText)
@@ -97,8 +93,15 @@ extension HomeViewController: HomeViewControllerProtocol, UISearchBarDelegate {
     
     func reloadData() {
         DispatchQueue.main.async { [weak self] in
-            guard let self else { return }
-            self.tableView.reloadData()
+            guard let self = self else { return }
+            let range = NSRange(location: 0, length: self.tableView.numberOfSections)
+            let sections = IndexSet(integersIn: Range(range) ?? 0..<0)
+            // Set the desired animation option for the reload
+            let animationOptions: UITableView.RowAnimation = .fade
+            // Perform the animated reload
+            let isEmpty = self.presenter.numberOfItems == 0
+            self.messageLabel.isHidden = !isEmpty
+            self.tableView.reloadSections(sections, with: animationOptions)
         }
     }
 }

@@ -30,7 +30,10 @@ final class HomePageTableViewCellPresenter {
 
 extension HomePageTableViewCellPresenter: HomePageTableViewCellPresenterProtocol {
     func load() {
-        
+        guard (tracks.artworkUrl100 != nil) else { return }
+        guard (tracks.collectionName != nil) else { return }
+        guard (tracks.trackName != nil) else { return }
+        guard (tracks.artistName != nil) else { return }
         let imageURL = URL(string: tracks.artworkUrl100!)
         service.downloadImage(fromURL: imageURL!) { image in
             DispatchQueue.main.async {

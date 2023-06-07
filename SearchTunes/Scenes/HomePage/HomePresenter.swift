@@ -41,6 +41,8 @@ extension HomePresenter: HomePresenterProtocol {
     func searchBarTextDidChange(_ searchText: String) {
         view?.showLoading()
         view?.setupTableView()
+        view?.setupEmptyView()
+        // Using debounceTimer to not send request too frequently
         debounceTimer?.invalidate()
         debounceTimer = Timer.scheduledTimer(withTimeInterval: debounceInterval, repeats: false) { [weak self] _ in
             if let encodedText = searchText.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
