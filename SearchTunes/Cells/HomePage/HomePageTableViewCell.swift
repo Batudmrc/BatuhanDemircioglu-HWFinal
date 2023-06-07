@@ -9,6 +9,7 @@ import UIKit
 
 class HomePageTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
     @IBOutlet weak var playerImageView: UIImageView!
     @IBOutlet weak var collectionName: UILabel!
     @IBOutlet weak var artistName: UILabel!
@@ -21,8 +22,10 @@ class HomePageTableViewCell: UITableViewCell {
         // Initialization code
     }
     
-    func configute() {
-        
+    func configute(model: HomeCellConfigureModel) {
+        collectionName.text = model.collectionName
+        artistName.text = model.artistName
+        trackName.text = model.trackName
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -30,4 +33,11 @@ class HomePageTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+}
+struct HomeCellConfigureModel {
+    let playerImageView: UIImageView
+    let collectionName: String?
+    let artistName: String?
+    let trackName: String?
+    let coverImageView: String?
 }

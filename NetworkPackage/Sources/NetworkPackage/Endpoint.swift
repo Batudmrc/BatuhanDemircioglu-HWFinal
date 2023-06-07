@@ -40,7 +40,7 @@ extension Endpoint: EndpointProtocol  {
     var baseURL: String {
         switch self {
         case .getResults(searchText: let searchText):
-            return "https://itunes.apple.com/search?term=\(searchText)"
+            return "https://itunes.apple.com/search?term=\(searchText)&country=tr&media=music"
         }
     }
     

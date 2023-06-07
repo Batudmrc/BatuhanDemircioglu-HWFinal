@@ -29,12 +29,15 @@ final class DetailViewPresenter {
 
 extension DetailViewPresenter: DetailViewPresenterProtocol {
     func viewDidLoad() {
+        view.showLoading()
         guard let track = view.getTrack() else { return }
-        let imageURL = URL(string: track.artworkUrl100!)
+        let modifiedURLString = track.artworkUrl100!.replacingOccurrences(of: "/100x100bb.jpg", with: "/320x320bb.jpg")
+        let imageURL = URL(string: modifiedURLString)
         service.downloadImage(fromURL: imageURL!, completion: { [weak self] image in
             // Use the downloaded image here
             DispatchQueue.main.async {
                 self?.view.setTrackImage(image)
+                self!.view.hideLoading()
             }
         })
         

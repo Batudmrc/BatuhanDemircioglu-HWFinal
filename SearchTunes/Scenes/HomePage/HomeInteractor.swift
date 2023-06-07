@@ -10,7 +10,7 @@ import NetworkPackage
 
 //MARK: Presenter -> InteractorProtocol
 protocol HomeInteractorProtocol {
-    func fetchTracks()
+    func fetchTracks(with searchText: String)
 }
 
 protocol HomeInteractorOutput: AnyObject {
@@ -25,19 +25,13 @@ final class HomeInteractor {
     private let service: NetworkManagerProtocol = NetworkManager()
     weak var output: HomeInteractorOutput?
     
-    /*init(service: NetworkManagerProtocol) {
-        self.service = service
-    }*/
-    
 }
 
 extension HomeInteractor: HomeInteractorProtocol {
-    func fetchTracks() {
-        service.request(.getResults(searchText: "Recep+tayyip+erdogan"), completion: { [weak self] (result: Result<SearchResult, Error>) in
+    func fetchTracks(with searchText: String) {
+        service.request(.getResults(searchText: searchText), completion: { [weak self] (result: Result<SearchResult, Error>) in
             guard self != nil else { return }
             self?.output?.handleTrackResult(result)
         })
     }
-    
-    
 }

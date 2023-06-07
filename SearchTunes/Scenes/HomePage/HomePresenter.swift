@@ -13,9 +13,13 @@ protocol HomePresenterProtocol {
     func load()
     func track(_ index: Int) -> Track?
     func didSelectRowAt(_ index: Int)
+    func searchBarTextDidChange(_ searchText: String)
 }
 
 final class HomePresenter {
+    // Timer to don't make too much requests
+    private var debounceInterval: TimeInterval = 0.7
+    private var debounceTimer: Timer?
     
     private var tracks: [Track] = []
     weak var view: HomeViewControllerProtocol?
@@ -34,17 +38,27 @@ final class HomePresenter {
 }
 
 extension HomePresenter: HomePresenterProtocol {
+    func searchBarTextDidChange(_ searchText: String) {
+        view?.showLoading()
+        view?.setupTableView()
+        debounceTimer?.invalidate()
+        debounceTimer = Timer.scheduledTimer(withTimeInterval: debounceInterval, repeats: false) { [weak self] _ in
+            if let encodedText = searchText.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
+                self?.interactor.fetchTracks(with: encodedText)
+            }
+        }
+    }
+    
     func didSelectRowAt(_ index: Int) {
         guard let track = track(index) else { return }
         router?.navigateToDetail(.detail(source: track))
     }
     
     func load() {
-        view?.showLoading()
-        view?.setupTableView()
-        interactor.fetchTracks()
+        
+        //interactor.fetchTracks(with: "ezhel")
     }
-    
+    // SafeIndex koy
     func track(_ index: Int) -> Track? {
         tracks[index]
     }

@@ -19,6 +19,7 @@ protocol HomeViewControllerProtocol: AnyObject {
 class HomeViewController: UIViewController {
     
     
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     private let service: NetworkManagerProtocol = NetworkManager()
     
@@ -45,25 +46,47 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: HomePageTableViewCell.identifier, for: indexPath) as! HomePageTableViewCell
-        if let track = self.presenter.track(indexPath.row) {
+        cell.coverImageView.image = nil
+        if let track = presenter.track(indexPath.row) {
             cell.trackName.text = track.trackName
             cell.artistName.text = track.artistName
             cell.collectionName.text = track.collectionName
             
+            //cell.configute(model: <#T##HomeCellConfigureModel#>)
+            
             let imageURL = URL(string: track.artworkUrl100!)
-            service.downloadImage(fromURL: imageURL!, completion: { [weak self] image in
-                // Use the downloaded image here
+            
+            // Show the spinner
+            cell.spinner.startAnimating()
+            cell.spinner.isHidden = false
+            
+            // Start the image download operation
+            service.downloadImage(fromURL: imageURL!) { image in
+                // Hide the spinner
                 DispatchQueue.main.async {
+                    cell.spinner.stopAnimating()
+                    cell.spinner.isHidden = true
+                    
+                    // Animate the image appearing
+                    cell.coverImageView.alpha = 0.0
                     cell.coverImageView.image = image
+                    UIView.animate(withDuration: 0.3) {
+                        cell.coverImageView.alpha = 1.0
+                    }
                 }
-            })
-            //print("\(track.artistName) - \(track.trackName) - \(track.wrapperType)")
+                
+            }
         }
         return cell
     }
 }
 
-extension HomeViewController: HomeViewControllerProtocol {
+extension HomeViewController: HomeViewControllerProtocol, UISearchBarDelegate {
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        presenter.searchBarTextDidChange(searchText)
+    }
+    
     func setupTableView() {
         tableView.dataSource = self
         tableView.delegate = self
@@ -72,7 +95,7 @@ extension HomeViewController: HomeViewControllerProtocol {
     }
     
     func showLoading() {
-
+        
     }
     
     func hideLoading() {
