@@ -3,7 +3,7 @@
     <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
         <attribute name="artistName" optional="YES" attributeType="String"/>
         <attribute name="collectionName" optional="YES" attributeType="String"/>
-        <attribute name="coverImage" optional="YES" attributeType="String"/>
+        <attribute name="coverImage" optional="YES" attributeType="Binary"/>
         <attribute name="previewAudio" optional="YES" attributeType="String"/>
         <attribute name="trackId" optional="YES" attributeType="String"/>
         <attribute name="trackName" optional="YES" attributeType="String"/>

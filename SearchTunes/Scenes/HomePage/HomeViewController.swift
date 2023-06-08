@@ -33,6 +33,10 @@ class HomeViewController: UIViewController {
         //setupTableView()
         presenter.load()
     }
+    
+    @IBAction func favoriteButtonTapped(_ sender: Any) {
+        presenter.favoriteButtonTapped()
+    }
 }
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {

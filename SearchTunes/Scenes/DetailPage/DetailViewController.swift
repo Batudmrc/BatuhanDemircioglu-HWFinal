@@ -17,6 +17,7 @@ protocol DetailViewControllerProtocol: AnyObject {
     func getTrack() -> Track?
     func showLoading()
     func hideLoading()
+    func setupGesture()
 }
 
 final class DetailViewController: UIViewController {
@@ -36,11 +37,11 @@ final class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSpinner()
+        setupGesture()
         setupImageView()
-        presenter.viewDidLoad()
+        presenter.viewDidLoad(context: context)
         //saveFavorite()
         //loadFavorite()
-        
     }
     
     func saveFavorite() {
@@ -68,10 +69,36 @@ final class DetailViewController: UIViewController {
 }
 
 extension DetailViewController: DetailViewControllerProtocol {
+    func setupGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(favoriteButtonTapped))
+        favoriteButtonImageView.isUserInteractionEnabled = true
+        favoriteButtonImageView.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc func favoriteButtonTapped() {
+        presenter.favoriteButtonTapped(context: context)
+    }
+    
     
     func updateLikedButton() {
+        let isFavorite = presenter.getIsFavorite()
+        let imageName = isFavorite ? "heart.fill" : "heart"
+        let image = UIImage(systemName: imageName)
         
+        if isFavorite {
+            favoriteButtonImageView.tintColor = .red
+        } else {
+            favoriteButtonImageView.tintColor = .darkGray
+        }
+        
+        UIView.transition(with: favoriteButtonImageView, duration: 0.2, options: [.transitionCrossDissolve], animations: {
+            self.favoriteButtonImageView.transform = CGAffineTransform(scaleX: 1.8, y: 1.8)
+            self.favoriteButtonImageView.image = image
+            self.favoriteButtonImageView.transform = .identity
+        }, completion: nil)
     }
+
+
     
     func setTrackImage(_ image: UIImage?) {
         DispatchQueue.main.async {
@@ -88,7 +115,7 @@ extension DetailViewController: DetailViewControllerProtocol {
             self.spinner.startAnimating()
         }
     }
-
+    
     func hideLoading() {
         DispatchQueue.main.async {
             self.spinner.stopAnimating()
@@ -116,9 +143,8 @@ extension DetailViewController: DetailViewControllerProtocol {
         coverImageView.layer.cornerRadius = 8.0
         coverImageView.layer.masksToBounds = true
         coverImageView.contentMode = .scaleAspectFit
-        
         // Apply shadow to the coverImageView layer
-        coverImageView.layer.shadowColor = UIColor.black.cgColor
+        coverImageView.layer.shadowColor = UIColor.clear.cgColor
         coverImageView.layer.shadowOffset = CGSize(width: 0, height: 2)
         coverImageView.layer.shadowOpacity = 1
         coverImageView.layer.shadowRadius = 4.0

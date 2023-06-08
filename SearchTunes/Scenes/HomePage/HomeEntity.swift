@@ -20,6 +20,7 @@ public struct SearchResult: Codable {
 
 // MARK: - Result
 public struct Track: Codable {
+    public let trackId: Int?
     public let artistName: String?
     public let collectionName: String?
     public let trackName: String?
@@ -32,10 +33,10 @@ public struct Track: Codable {
     public let wrapperType: String?
 
     enum CodingKeys: String, CodingKey {
-        case artistName, collectionName, trackName, collectionCensoredName, artworkUrl100, collectionPrice, trackPrice, primaryGenreName, previewUrl, wrapperType
+        case artistName, collectionName, trackName, collectionCensoredName, artworkUrl100, collectionPrice, trackPrice, primaryGenreName, previewUrl, wrapperType, trackId
     }
 
-    public init(artistName: String?, collectionName: String?, trackName: String?, collectionCensoredName: String?, artworkUrl100: String?, collectionPrice: Double?, trackPrice: Double?, primaryGenreName: String?, previewUrl: String?, wrapperType: String?) {
+    public init(artistName: String?, collectionName: String?, trackName: String?, collectionCensoredName: String?, artworkUrl100: String?, collectionPrice: Double?, trackPrice: Double?, primaryGenreName: String?, previewUrl: String?, wrapperType: String?, trackId: Int?) {
         self.artistName = artistName
         self.collectionName = collectionName
         self.trackName = trackName
@@ -46,5 +47,6 @@ public struct Track: Codable {
         self.primaryGenreName = primaryGenreName
         self.previewUrl = previewUrl
         self.wrapperType = wrapperType
+        self.trackId = trackId
     }
 }

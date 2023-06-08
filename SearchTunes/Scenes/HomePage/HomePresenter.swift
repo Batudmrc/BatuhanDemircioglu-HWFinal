@@ -13,6 +13,7 @@ protocol HomePresenterProtocol {
     func load()
     func track(_ index: Int) -> Track?
     func didSelectRowAt(_ index: Int)
+    func favoriteButtonTapped()
     func searchBarTextDidChange(_ searchText: String)
 }
 
@@ -38,6 +39,10 @@ final class HomePresenter {
 }
 
 extension HomePresenter: HomePresenterProtocol {
+    func favoriteButtonTapped() {
+        router?.navigateToDetail(.favorites)
+    }
+    
     func searchBarTextDidChange(_ searchText: String) {
         view?.showLoading()
         view?.setupTableView()

@@ -46,7 +46,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="iTunes Search" id="9lg-hD-Fed">
-                        <barButtonItem key="rightBarButtonItem" title="Item" image="heart.fill" catalog="system" id="e71-nH-LrD"/>
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="heart.fill" catalog="system" id="e71-nH-LrD">
+                            <connections>
+                                <action selector="favoriteButtonTapped:" destination="BYZ-38-t0r" id="Hnt-Ut-0v0"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
