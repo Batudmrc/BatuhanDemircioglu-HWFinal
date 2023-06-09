@@ -15,22 +15,15 @@ protocol DetailViewInteractorProtocol {
 }
 
 protocol DetailViewInteractorOutput {
-    func favoriteTracksOutput(result: [Item])
+
 }
 
 final class DetailViewInteractor {
     
     private let service: NetworkManagerProtocol = NetworkManager()
     var favoriteTracks = [Item]()
-    weak var view: DetailViewControllerProtocol?
     var presenter: DetailViewPresenterProtocol?
     var output: DetailViewInteractorOutput?
-    
-    init(
-        view: DetailViewControllerProtocol?
-    ) {
-        self.view = view
-    }
 }
 
 extension DetailViewInteractor: DetailViewInteractorProtocol {
@@ -38,7 +31,7 @@ extension DetailViewInteractor: DetailViewInteractorProtocol {
     func addToFavorites(context: NSManagedObjectContext) {
         
         presenter?.changeFavoriteStatus(status: true)
-        guard let track = view!.getTrack(),
+        guard let track = presenter!.getTrack(),
               let trackId = track.trackId else { return }
         let newFavTrack = Item(context: context)
         newFavTrack.collectionName = track.collectionName
@@ -50,7 +43,7 @@ extension DetailViewInteractor: DetailViewInteractorProtocol {
         service.downloadImage(fromURL: imageURL!, completion: { image in
             newFavTrack.coverImage = image?.pngData()
         })
-        //
+        
         favoriteTracks.append(newFavTrack)
         do {
             try context.save()
@@ -58,7 +51,6 @@ extension DetailViewInteractor: DetailViewInteractorProtocol {
             print("Failed to save search history: \(error)")
         }
         favoriteTracks = favoriteTracks.filter { $0.trackId != String(trackId) }
-        //output?.favoriteTracksOutput(result: favoriteTracks)
         /*
         let request: NSFetchRequest<Item> = Item.fetchRequest()
         do {
@@ -75,7 +67,7 @@ extension DetailViewInteractor: DetailViewInteractorProtocol {
     
     func discardFavorite(context: NSManagedObjectContext) {
 
-        guard let track = view!.getTrack(),
+        guard let track = presenter!.getTrack(),
               let trackId = track.trackId else { return }
         
         let fetchRequest: NSFetchRequest<Item> = Item.fetchRequest()

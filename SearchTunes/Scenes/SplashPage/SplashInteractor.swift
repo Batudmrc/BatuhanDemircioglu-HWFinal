@@ -14,6 +14,8 @@ protocol SplashInteractorProtocol: AnyObject {
 
 protocol SplashInteractorOutputProtocol {
     func connectionStatus(status: Bool)
+    func showNoConnectionAlert()
+    //func hideSpinner()
 }
 
 final class SplashInteractor: SplashInteractorProtocol {
@@ -21,8 +23,13 @@ final class SplashInteractor: SplashInteractorProtocol {
     var output: SplashInteractorOutputProtocol?
     
     func checkConnection() {
-        let internetStatus = NetworkUtility.checkNetworkConnectivity()
-        self.output?.connectionStatus(status: internetStatus)
-
-    }
+            let isConnected = NetworkUtility.checkNetworkConnectivity()
+            if isConnected {
+                output?.connectionStatus(status: true)
+            } else {
+                output?.showNoConnectionAlert()
+            }
+        
+        
+        }
 }

@@ -51,6 +51,17 @@ final class DetailViewController: UIViewController {
         setupGesture()
         setupImageView()
         presenter.viewDidLoad(context: context)
+        /*
+        let request: NSFetchRequest<Item> = Item.fetchRequest()
+        do {
+            favoriteTracks = try context.fetch(request)
+            for i in favoriteTracks {
+                print(i.trackName as Any)
+            }
+        } catch {
+            print(error)
+        }
+         */
     }
     
     @IBAction func sliderAction(_ sender: Any) {

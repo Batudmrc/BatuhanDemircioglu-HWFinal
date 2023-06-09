@@ -31,7 +31,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         //setupTableView()
-        presenter.load()
+        //presenter.load()
     }
     
     @IBAction func favoriteButtonTapped(_ sender: Any) {

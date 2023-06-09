@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -10,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SplashViewController" customModule="SearchTunes" customModuleProvider="target">
             <connections>
+                <outlet property="spinner" destination="jBB-Yf-FqX" id="833-IS-uZ9"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -18,21 +20,43 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="test" translatesAutoresizingMaskIntoConstraints="NO" id="8zu-zs-lnt">
-                    <rect key="frame" x="146.66666666666666" y="376" width="100" height="100"/>
-                </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YmH-qJ-5co">
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="itunes" translatesAutoresizingMaskIntoConstraints="NO" id="8zu-zs-lnt">
+                            <rect key="frame" x="76.666666666666686" y="396" width="240" height="60"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="240" id="fxE-xb-0TX"/>
+                                <constraint firstAttribute="height" constant="60" id="y8x-r8-K1L"/>
+                            </constraints>
+                        </imageView>
+                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="jBB-Yf-FqX">
+                            <rect key="frame" x="178" y="696" width="37" height="37"/>
+                        </activityIndicatorView>
+                    </subviews>
+                    <color key="backgroundColor" red="0.081016781712685101" green="0.53865671268507409" blue="0.90196078431372551" alpha="0.6420736754966887" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="jBB-Yf-FqX" secondAttribute="trailing" constant="178" id="4CK-qa-tqy"/>
+                        <constraint firstItem="8zu-zs-lnt" firstAttribute="centerY" secondItem="YmH-qJ-5co" secondAttribute="centerY" id="8w1-gO-Dtx"/>
+                        <constraint firstItem="jBB-Yf-FqX" firstAttribute="leading" secondItem="YmH-qJ-5co" secondAttribute="leading" constant="178" id="Kgo-oO-dmU"/>
+                        <constraint firstItem="8zu-zs-lnt" firstAttribute="centerX" secondItem="YmH-qJ-5co" secondAttribute="centerX" id="edJ-TB-EM9"/>
+                        <constraint firstAttribute="bottom" secondItem="jBB-Yf-FqX" secondAttribute="bottom" constant="119" id="lOQ-qu-Iy2"/>
+                    </constraints>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="8zu-zs-lnt" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="qTb-7o-KMI"/>
-                <constraint firstItem="8zu-zs-lnt" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="wbc-C6-llX"/>
+                <constraint firstAttribute="trailing" secondItem="YmH-qJ-5co" secondAttribute="trailing" id="1nm-eN-3nN"/>
+                <constraint firstItem="YmH-qJ-5co" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="6z9-yG-Sdd"/>
+                <constraint firstItem="YmH-qJ-5co" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="YKK-wT-mf3"/>
+                <constraint firstAttribute="bottom" secondItem="YmH-qJ-5co" secondAttribute="bottom" id="tOo-FR-Zre"/>
             </constraints>
             <point key="canvasLocation" x="131" y="-11"/>
         </view>
     </objects>
     <resources>
-        <image name="test" width="100" height="100"/>
+        <image name="itunes" width="2428" height="703"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

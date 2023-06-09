@@ -18,7 +18,7 @@ final class DetailViewRouter: DetailViewRouterProtocol {
     static func createModule() -> DetailViewController {
         let view = DetailViewController()
         let router = DetailViewRouter()
-        let interactor = DetailViewInteractor(view: view)
+        let interactor = DetailViewInteractor()
         let presenter = DetailViewPresenter(view: view, router: router, interactor: interactor)
         view.presenter = presenter
         interactor.presenter = presenter
