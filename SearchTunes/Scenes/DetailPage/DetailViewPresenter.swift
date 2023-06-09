@@ -20,6 +20,7 @@ protocol DetailViewPresenterProtocol {
     func getIsFavorite() -> Bool
     func changeSliderAction()
     func viewWillDisappear()
+    func changeFavoriteStatus(status: Bool)
 }
 
 final class DetailViewPresenter {
@@ -28,18 +29,29 @@ final class DetailViewPresenter {
     
     unowned var view: DetailViewControllerProtocol!
     let router: DetailViewRouterProtocol!
+    private let interactor: DetailViewInteractorProtocol
     private var isFavorite = false
     var favoriteTracks = [Item]()
     var player: AVAudioPlayer?
     private var timer: Timer?
     
-    init(view: DetailViewControllerProtocol!, router: DetailViewRouterProtocol!) {
+    init(view: DetailViewControllerProtocol!, router: DetailViewRouterProtocol!, interactor: DetailViewInteractorProtocol) {
         self.view = view
         self.router = router
+        self.interactor = interactor
     }
 }
 
 extension DetailViewPresenter: DetailViewPresenterProtocol {
+    func changeFavoriteStatus(status: Bool) {
+        DispatchQueue.main.async {
+            self.isFavorite = status
+            self.view.updateLikedButton()
+        }
+        
+        
+    }
+    
     func viewWillDisappear() {
         timer?.invalidate()
         player?.stop()
@@ -50,6 +62,7 @@ extension DetailViewPresenter: DetailViewPresenterProtocol {
         player?.currentTime = TimeInterval(view.changeSliderAction())
         player?.prepareToPlay()
         view.updatePlayButtonImage("play.circle.fill")
+        //interactor.discardFavorite(context: )
     }
     
     func playButtonTapped() {
@@ -151,7 +164,10 @@ extension DetailViewPresenter: DetailViewPresenterProtocol {
     }
     //TODO: add to the coreData
     func addToFavorites(context: NSManagedObjectContext) {
-        isFavorite = true
+        interactor.addToFavorites(context: context)
+        
+        
+        /*isFavorite = true
         guard let track = view.getTrack(),
               let trackId = track.trackId else { return }
         let newFavTrack = Item(context: context)
@@ -180,10 +196,12 @@ extension DetailViewPresenter: DetailViewPresenterProtocol {
             }
         } catch {
             print(error)
-        }
+        }*/
     }
     //TODO: remove from coreData
     func discardFavorite(context: NSManagedObjectContext) {
+        interactor.discardFavorite(context: context)
+        /*
         guard let track = view.getTrack(),
               let trackId = track.trackId else { return }
         
@@ -213,6 +231,12 @@ extension DetailViewPresenter: DetailViewPresenterProtocol {
             }
         } catch {
             print(error)
-        }
+        }*/
+    }
+}
+
+extension DetailViewPresenter: DetailViewInteractorOutput {
+    func favoriteTracksOutput(result: [Item]) {
+        favoriteTracks = result
     }
 }
