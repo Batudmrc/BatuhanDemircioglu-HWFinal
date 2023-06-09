@@ -42,23 +42,24 @@ final class DetailViewPresenter {
 extension DetailViewPresenter: DetailViewPresenterProtocol {
     func viewWillDisappear() {
         timer?.invalidate()
+        player?.stop()
     }
     
     func changeSliderAction() {
         player?.stop()
         player?.currentTime = TimeInterval(view.changeSliderAction())
         player?.prepareToPlay()
-        view.updatePlayButtonImage(imageName: "play.circle.fill")
+        view.updatePlayButtonImage("play.circle.fill")
     }
     
     func playButtonTapped() {
         if player?.isPlaying == true {
             player?.pause()
-            view.updatePlayButtonImage(imageName: "play.circle.fill")
+            view.updatePlayButtonImage("play.circle.fill")
             
         } else {
             player?.play()
-            view.updatePlayButtonImage(imageName: "pause.circle.fill")
+            view.updatePlayButtonImage("pause.circle.fill")
         }
     }
     
@@ -84,7 +85,7 @@ extension DetailViewPresenter: DetailViewPresenterProtocol {
     }
     
     @objc func updateSlider() {
-        view.updateSlider(currentTime: player?.currentTime ?? 0)
+        view.updateSlider(player?.currentTime ?? 0)
     }
     
     func viewDidLoad(context: NSManagedObjectContext) {
@@ -138,7 +139,7 @@ extension DetailViewPresenter: DetailViewPresenterProtocol {
                     // Create an AVAudioPlayer with the audio data
                     do {
                         self?.player = try AVAudioPlayer(data: audioData)
-                        self!.view.setupSlider(duration: self!.player?.duration)
+                        self!.view.setupSlider(self!.player?.duration)
                     } catch {
                         print("Failed to create AVAudioPlayer: \(error)")
                     }

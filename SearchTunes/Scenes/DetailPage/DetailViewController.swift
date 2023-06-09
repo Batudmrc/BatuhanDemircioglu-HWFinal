@@ -20,9 +20,9 @@ protocol DetailViewControllerProtocol: AnyObject {
     func setupGesture()
     func showPlayButtonLoading()
     func hidePlayButtonLoading()
-    func updatePlayButtonImage(imageName: String)
-    func updateSlider(currentTime: TimeInterval?)
-    func setupSlider(duration: TimeInterval?)
+    func updatePlayButtonImage(_ imageName: String)
+    func updateSlider(_ currentTime: TimeInterval?)
+    func setupSlider(_ duration: TimeInterval?)
     func changeSliderAction() -> Float
 }
 
@@ -52,7 +52,6 @@ final class DetailViewController: UIViewController {
         setupImageView()
         presenter.viewDidLoad(context: context)
     }
-
     
     @IBAction func sliderAction(_ sender: Any) {
         presenter.changeSliderAction()
@@ -76,15 +75,15 @@ extension DetailViewController: DetailViewControllerProtocol {
         musicSlider.value
     }
     
-    func setupSlider(duration: TimeInterval?) {
+    func setupSlider(_ duration: TimeInterval?) {
         musicSlider.maximumValue = Float(duration!)
     }
     
-    func updateSlider(currentTime: TimeInterval?) {
+    func updateSlider(_ currentTime: TimeInterval?) {
         musicSlider.value = Float(currentTime ?? 0)
     }
     
-    func updatePlayButtonImage(imageName: String) {
+    func updatePlayButtonImage(_ imageName: String) {
         let scaleTransform = CGAffineTransform(scaleX: 0.9, y: 0.9)
         
         UIView.transition(with: playButtonImageView, duration: 0.12, options: [.transitionCrossDissolve], animations: {
