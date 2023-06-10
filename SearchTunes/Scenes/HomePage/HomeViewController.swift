@@ -7,7 +7,7 @@
 
 import UIKit
 import NetworkPackage
-
+import AVFoundation
 
 protocol HomeViewControllerProtocol: AnyObject {
     func setupTableView()
@@ -19,14 +19,16 @@ protocol HomeViewControllerProtocol: AnyObject {
 
 class HomeViewController: UIViewController {
     
-    
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     private let service: NetworkManagerProtocol = NetworkManager()
     
     let spinner = UIActivityIndicatorView(style: .large)
     var presenter: HomePresenterProtocol!
+    let interactor: HomePageTableViewCellInteractorProtocol = HomePageTableViewCellInteractor()
     let messageLabel = UILabel()
+    private var currentlyPlayingIndex: Int? = nil
+    var audioPlayers: [IndexPath: AVAudioPlayer] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,12 +36,14 @@ class HomeViewController: UIViewController {
         //presenter.load()
     }
     
+    
     @IBAction func favoriteButtonTapped(_ sender: Any) {
         presenter.favoriteButtonTapped()
     }
 }
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let isEmpty = presenter.numberOfItems == 0
         UIView.animate(withDuration: 0.8) {
@@ -56,7 +60,14 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: HomePageTableViewCell.identifier, for: indexPath) as! HomePageTableViewCell
         cell.coverImageView.image = nil
         if let track = presenter.track(indexPath.row) {
-            cell.cellPresenter = HomePageTableViewCellPresenter(view: cell, tracks: track)
+            let presenter = HomePageTableViewCellPresenter(
+                view: cell,
+                tracks: track,
+                interactor: interactor
+            )
+            cell.homeViewController = self
+            
+            cell.cellPresenter = presenter
             cell.spinner.startAnimating()
             cell.spinner.isHidden = false
         }

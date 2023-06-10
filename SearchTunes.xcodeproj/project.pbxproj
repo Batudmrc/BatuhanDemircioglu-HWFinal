@@ -40,6 +40,8 @@
 		3B0D3C1A2A2FDAD90046D441 /* DetailViewInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0D3C192A2FDAD90046D441 /* DetailViewInteractor.swift */; };
 		3B0D3C1C2A2FDB300046D441 /* DetailViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0D3C1B2A2FDB300046D441 /* DetailViewPresenter.swift */; };
 		3B0D3C1E2A2FDB600046D441 /* DetailViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0D3C1D2A2FDB600046D441 /* DetailViewRouter.swift */; };
+		3B3DA7F62A3382A7009E6443 /* HomePageCellInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3DA7F52A3382A7009E6443 /* HomePageCellInteractor.swift */; };
+		3B7C853E2A346B1600965CB5 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B7C853D2A346B1600965CB5 /* AudioManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +99,8 @@
 		3B0D3C192A2FDAD90046D441 /* DetailViewInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewInteractor.swift; sourceTree = "<group>"; };
 		3B0D3C1B2A2FDB300046D441 /* DetailViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewPresenter.swift; sourceTree = "<group>"; };
 		3B0D3C1D2A2FDB600046D441 /* DetailViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewRouter.swift; sourceTree = "<group>"; };
+		3B3DA7F52A3382A7009E6443 /* HomePageCellInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageCellInteractor.swift; sourceTree = "<group>"; };
+		3B7C853D2A346B1600965CB5 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,6 +163,7 @@
 				3B0D3BD02A2E7B870046D441 /* LaunchScreen.storyboard */,
 				3B0D3BD32A2E7B870046D441 /* Info.plist */,
 				3B0D3BCB2A2E7B860046D441 /* SearchTunes.xcdatamodeld */,
+				3B7C853D2A346B1600965CB5 /* AudioManager.swift */,
 			);
 			path = SearchTunes;
 			sourceTree = "<group>";
@@ -212,6 +217,7 @@
 				3B0D3BFE2A2E9D310046D441 /* HomePageTableViewCell.swift */,
 				3B0D3BFF2A2E9D310046D441 /* HomePageTableViewCell.xib */,
 				3B024C582A311E63009BF16E /* HomePageTableViewCellPresenter.swift */,
+				3B3DA7F52A3382A7009E6443 /* HomePageCellInteractor.swift */,
 			);
 			path = HomePage;
 			sourceTree = "<group>";
@@ -402,6 +408,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B3DA7F62A3382A7009E6443 /* HomePageCellInteractor.swift in Sources */,
 				3B0D3C052A2F332C0046D441 /* HomePresenter.swift in Sources */,
 				3B024C552A30CEE4009BF16E /* FavoritesViewPresenter.swift in Sources */,
 				3B0D3C122A2F78AF0046D441 /* SplashRouter.swift in Sources */,
@@ -419,6 +426,7 @@
 				3B0D3C092A2F333D0046D441 /* HomeRouter.swift in Sources */,
 				3B024C572A30CEF2009BF16E /* FavoritesViewRouter.swift in Sources */,
 				3B024C592A311E63009BF16E /* HomePageTableViewCellPresenter.swift in Sources */,
+				3B7C853E2A346B1600965CB5 /* AudioManager.swift in Sources */,
 				3B0D3BC52A2E7B860046D441 /* SceneDelegate.swift in Sources */,
 				3B0D3C1E2A2FDB600046D441 /* DetailViewRouter.swift in Sources */,
 				3B0D3C0D2A2F77C10046D441 /* SplashViewController.swift in Sources */,

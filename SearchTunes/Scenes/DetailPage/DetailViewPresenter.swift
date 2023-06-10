@@ -7,7 +7,7 @@
 
 import Foundation
 import NetworkPackage
-import CoreData
+import CoreData // importing this for context NSManagedObjectContext
 import AVFoundation
 
 protocol DetailViewPresenterProtocol {
@@ -22,12 +22,13 @@ protocol DetailViewPresenterProtocol {
     func viewWillDisappear()
     func changeFavoriteStatus(status: Bool)
     func getTrack() -> Track?
+    func forwardButtonTapped()
+    func backButtonTapped()
 }
 
 final class DetailViewPresenter {
     
     private let service: NetworkManagerProtocol = NetworkManager()
-    
     unowned var view: DetailViewControllerProtocol!
     let router: DetailViewRouterProtocol!
     private let interactor: DetailViewInteractorProtocol
@@ -44,6 +45,20 @@ final class DetailViewPresenter {
 }
 
 extension DetailViewPresenter: DetailViewPresenterProtocol {
+    
+    func forwardButtonTapped() {
+        guard let currentTime = player?.currentTime else { return }
+        let newTime = currentTime + 5.0
+        player?.currentTime = newTime
+        view.updateSlider(newTime)
+    }
+    func backButtonTapped() {
+        guard let currentTime = player?.currentTime else { return }
+        let newTime = max(currentTime - 5.0, 0.0)
+        player?.currentTime = newTime
+        view.updateSlider(newTime)
+    }
+    
     func getTrack() -> Track? {
         view.getTrack()
     }
@@ -65,7 +80,6 @@ extension DetailViewPresenter: DetailViewPresenterProtocol {
         player?.currentTime = TimeInterval(view.changeSliderAction())
         player?.prepareToPlay()
         view.updatePlayButtonImage("play.circle.fill")
-        //interactor.discardFavorite(context: )
     }
     
     func playButtonTapped() {
@@ -111,7 +125,7 @@ extension DetailViewPresenter: DetailViewPresenterProtocol {
         view.showLoading()
         guard let track = view.getTrack(),
               let trackId = track.trackId else { return }
-        
+        // migrate this to interactor
         let fetchRequest: NSFetchRequest<Item> = Item.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "trackId == %@", String(trackId))
         
@@ -125,43 +139,32 @@ extension DetailViewPresenter: DetailViewPresenterProtocol {
         }
         
         //MARK: Download Image and Show Fetched Datas
-        let modifiedURLString = track.artworkUrl100!.replacingOccurrences(of: "/100x100bb.jpg", with: "/320x320bb.jpg")
-        let imageURL = URL(string: modifiedURLString)
-        service.downloadImage(fromURL: imageURL!, completion: { [weak self] image in
-            // Use the downloaded image here
+        interactor.downloadImage(for: track) { [weak self] imageData in
             DispatchQueue.main.async {
-                self?.view.setTrackImage(image)
-                self!.view.hideLoading()
+                self?.view.setTrackImage(imageData)
+                self?.view.hideLoading()
             }
-        })
+        }
+        
         view.setTrackName(track.trackName ?? "")
         view.setArtistName(track.artistName ?? "")
         view.setCollectionName(track.collectionName ?? "")
+        view.setPrice("Buy for : $\(String(track.trackPrice!))")
         
         view.showPlayButtonLoading()
         
         //MARK: Get audio ready to play
-        guard let track = view.getTrack(),
-              let previewUrl = track.previewUrl,
-              let audioURL = URL(string: previewUrl)
-        else { return }
-        DispatchQueue.global().async {
-            do {
-                let audioData = try Data(contentsOf: audioURL)
-                DispatchQueue.main.async { [weak self] in
-                    // Hide the loading animation
-                    self?.view.hidePlayButtonLoading()
-                    
-                    // Create an AVAudioPlayer with the audio data
-                    do {
-                        self?.player = try AVAudioPlayer(data: audioData)
-                        self!.view.setupSlider(self!.player?.duration)
-                    } catch {
-                        print("Failed to create AVAudioPlayer: \(error)")
-                    }
+        guard let previewUrl = track.previewUrl, let audioURL = URL(string: previewUrl) else { return }
+        interactor.loadAudio(from: audioURL) { [weak self] audioData in
+            DispatchQueue.main.async {
+                self?.view.hidePlayButtonLoading()
+                
+                do {
+                    self?.player = try AVAudioPlayer(data: audioData)
+                    self?.view.setupSlider(self?.player?.duration)
+                } catch {
+                    print("Failed to create AVAudioPlayer: \(error)")
                 }
-            } catch {
-                print("Failed to load audio data: \(error)")
             }
         }
     }

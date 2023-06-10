@@ -9,7 +9,7 @@ import UIKit
 
 extension NetworkManager {
 
-    public func downloadImage(fromURL url: URL, completion: @escaping (UIImage?) -> Void) {
+    public func downloadImageData(fromURL url: URL, completion: @escaping (Data?) -> Void) {
             let task = URLSession.shared.dataTask(with: url) { data, _, error in
                 if let error = error {
                     print("Image download error: \(error)")
@@ -17,12 +17,7 @@ extension NetworkManager {
                     return
                 }
                 
-                guard let data = data, let image = UIImage(data: data) else {
-                    completion(nil)
-                    return
-                }
-                
-                completion(image)
+                completion(data)
             }
             task.resume()
         }

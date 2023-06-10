@@ -10,7 +10,7 @@ import UIKit
 
 public protocol NetworkManagerProtocol {
     func request<T: Decodable>(_ endpoint: Endpoint<T>, completion: @escaping (Result<T, Error>) -> Void)
-    func downloadImage(fromURL url: URL, completion: @escaping (UIImage?) -> Void)
+    func downloadImageData(fromURL url: URL, completion: @escaping (Data?) -> Void)
 }
 
 public class NetworkManager: NetworkManagerProtocol {

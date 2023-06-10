@@ -12,10 +12,12 @@ import NetworkPackage
 protocol DetailViewInteractorProtocol {
     func addToFavorites(context: NSManagedObjectContext)
     func discardFavorite(context: NSManagedObjectContext)
+    func downloadImage(for track: Track, completion: @escaping (Data?) -> Void)
+    func loadAudio(from url: URL, completion: @escaping (Data) -> Void)
 }
 
 protocol DetailViewInteractorOutput {
-
+    
 }
 
 final class DetailViewInteractor {
@@ -27,6 +29,31 @@ final class DetailViewInteractor {
 }
 
 extension DetailViewInteractor: DetailViewInteractorProtocol {
+    
+    func loadAudio(from url: URL, completion: @escaping (Data) -> Void) {
+        DispatchQueue.global().async {
+            do {
+                let audioData = try Data(contentsOf: url)
+                completion(audioData)
+            } catch {
+                print("Failed to load audio data: \(error)")
+                completion(Data())
+            }
+        }
+    }
+    
+    func downloadImage(for track: Track, completion: @escaping (Data?) -> Void) {
+        guard let artworkUrl = track.artworkUrl100 else {
+            completion(nil)
+            return
+        }
+        // Modify the URL make image's quality higher
+        let modifiedURLString = artworkUrl.replacingOccurrences(of: "/100x100bb.jpg", with: "/640x640bb.jpg")
+        let imageURL = URL(string: modifiedURLString)
+        
+        service.downloadImageData(fromURL: imageURL!, completion: completion)
+    }
+
     
     func addToFavorites(context: NSManagedObjectContext) {
         
@@ -40,33 +67,32 @@ extension DetailViewInteractor: DetailViewInteractorProtocol {
         newFavTrack.artistName = track.artistName
         newFavTrack.trackId = String(track.trackId!)
         let imageURL = URL(string: track.artworkUrl100!)
-        service.downloadImage(fromURL: imageURL!, completion: { image in
-            newFavTrack.coverImage = image?.pngData()
+        service.downloadImageData(fromURL: imageURL!, completion: { imageData in
+            newFavTrack.coverImage = imageData
+            self.favoriteTracks.append(newFavTrack)
+            do {
+                try context.save()
+            } catch {
+                print("Failed to save search history: \(error)")
+            }
         })
         
-        favoriteTracks.append(newFavTrack)
-        do {
-            try context.save()
-        } catch {
-            print("Failed to save search history: \(error)")
-        }
-        favoriteTracks = favoriteTracks.filter { $0.trackId != String(trackId) }
-        /*
-        let request: NSFetchRequest<Item> = Item.fetchRequest()
-        do {
-            favoriteTracks = try context.fetch(request)
-            for i in favoriteTracks {
-                print(i.trackName as Any)
-            }
-        } catch {
-            print(error)
-        }
-         */
         
+        favoriteTracks = favoriteTracks.filter { $0.trackId != String(trackId) }
+        
+         let request: NSFetchRequest<Item> = Item.fetchRequest()
+         do {
+         favoriteTracks = try context.fetch(request)
+         for i in favoriteTracks {
+         print(i.coverImage as Any)
+         }
+         } catch {
+         print(error)
+         }
     }
     
     func discardFavorite(context: NSManagedObjectContext) {
-
+        
         guard let track = presenter!.getTrack(),
               let trackId = track.trackId else { return }
         
@@ -88,15 +114,15 @@ extension DetailViewInteractor: DetailViewInteractorProtocol {
         // Update the isFavorite flag
         presenter?.changeFavoriteStatus(status: false)
         /*
-        let request: NSFetchRequest<Item> = Item.fetchRequest()
-        do {
-            favoriteTracks = try context.fetch(request)
-            for i in favoriteTracks {
-                print(i.trackName as Any)
-            }
-        } catch {
-            print(error)
-        }
+         let request: NSFetchRequest<Item> = Item.fetchRequest()
+         do {
+         favoriteTracks = try context.fetch(request)
+         for i in favoriteTracks {
+         print(i.trackName as Any)
+         }
+         } catch {
+         print(error)
+         }
          */
         
     }

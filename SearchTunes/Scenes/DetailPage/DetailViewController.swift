@@ -12,7 +12,8 @@ protocol DetailViewControllerProtocol: AnyObject {
     func setTrackName(_ text: String)
     func setArtistName(_ text: String)
     func setCollectionName(_ text: String)
-    func setTrackImage(_ image: UIImage?)
+    func setPrice(_ text: String?)
+    func setTrackImage(_ imageData: Data?)
     func updateLikedButton()
     func getTrack() -> Track?
     func showLoading()
@@ -28,6 +29,11 @@ protocol DetailViewControllerProtocol: AnyObject {
 
 final class DetailViewController: UIViewController {
     
+    @IBOutlet weak var forwardButton: UIImageView!
+    @IBOutlet weak var backButton: UIImageView!
+    @IBOutlet weak var remainingTimeLabel: UILabel!
+    @IBOutlet weak var elapsedTimeLabel: UILabel!
+    @IBOutlet weak var priceButton: UIButton!
     @IBOutlet weak var musicSlider: UISlider!
     @IBOutlet weak var coverImageView: UIImageView!
     @IBOutlet weak var trackNameLabel: UILabel!
@@ -51,23 +57,13 @@ final class DetailViewController: UIViewController {
         setupGesture()
         setupImageView()
         presenter.viewDidLoad(context: context)
-        /*
-        let request: NSFetchRequest<Item> = Item.fetchRequest()
-        do {
-            favoriteTracks = try context.fetch(request)
-            for i in favoriteTracks {
-                print(i.trackName as Any)
-            }
-        } catch {
-            print(error)
-        }
-         */
+
     }
     
     @IBAction func sliderAction(_ sender: Any) {
         presenter.changeSliderAction()
     }
-    
+    //TODO: Migrate use this in the favorite
     func loadFavorite() {
         let request: NSFetchRequest<Item> = Item.fetchRequest()
         do {
@@ -82,6 +78,10 @@ final class DetailViewController: UIViewController {
 }
 
 extension DetailViewController: DetailViewControllerProtocol {
+    func setPrice(_ text: String?) {
+        priceButton.setTitle(text, for: .normal)
+    }
+    
     func changeSliderAction() -> Float {
         musicSlider.value
     }
@@ -92,6 +92,25 @@ extension DetailViewController: DetailViewControllerProtocol {
     
     func updateSlider(_ currentTime: TimeInterval?) {
         musicSlider.value = Float(currentTime ?? 0)
+        
+        let elapsedSeconds = Int(currentTime ?? 0)
+            let elapsedMinutes = elapsedSeconds / 60
+            let elapsedSecondsRemainder = elapsedSeconds % 60
+            
+            
+            // Calculate remaining time
+        let remainingSeconds = Int(30) - elapsedSeconds
+            let remainingMinutes = remainingSeconds / 60
+            let remainingSecondsRemainder = remainingSeconds % 60
+            
+        
+        UIView.transition(with: elapsedTimeLabel, duration: 0.12, options: .transitionCrossDissolve, animations: {
+                self.elapsedTimeLabel.text = String(format: "%02d:%02d", elapsedMinutes, elapsedSecondsRemainder)
+            }, completion: nil)
+            
+            UIView.transition(with: remainingTimeLabel, duration: 0.12, options: .transitionCrossDissolve, animations: {
+                self.remainingTimeLabel.text = String(format: "-%02d:%02d", remainingMinutes, remainingSecondsRemainder)
+            }, completion: nil)
     }
     
     func updatePlayButtonImage(_ imageName: String) {
@@ -131,7 +150,16 @@ extension DetailViewController: DetailViewControllerProtocol {
         let tapPlayGesture = UITapGestureRecognizer(target: self, action: #selector(playButtonTapped))
         playButtonImageView.isUserInteractionEnabled = true
         playButtonImageView.addGestureRecognizer(tapPlayGesture)
+        
+        let tapForwardGesture = UITapGestureRecognizer(target: self, action: #selector(forwardButtonTapped))
+        forwardButton.isUserInteractionEnabled = true
+        forwardButton.addGestureRecognizer(tapForwardGesture)
+
+        let tapBackGesture = UITapGestureRecognizer(target: self, action: #selector(backButtonTapped))
+        backButton.isUserInteractionEnabled = true
+        backButton.addGestureRecognizer(tapBackGesture)
     }
+    //MARK: Gesture functions
     
     @objc func playButtonTapped() {
         presenter.playButtonTapped()
@@ -141,6 +169,14 @@ extension DetailViewController: DetailViewControllerProtocol {
         presenter.favoriteButtonTapped(context: context)
     }
     
+    @objc func forwardButtonTapped() {
+        presenter.forwardButtonTapped()
+    }
+
+    @objc func backButtonTapped() {
+        presenter.backButtonTapped()
+    }
+
     
     func updateLikedButton() {
         let isFavorite = presenter.getIsFavorite()
@@ -159,16 +195,18 @@ extension DetailViewController: DetailViewControllerProtocol {
             self.favoriteButtonImageView.transform = .identity
         }, completion: nil)
     }
-
-
     
-    func setTrackImage(_ image: UIImage?) {
-        DispatchQueue.main.async {
-            self.coverImageView.image = image
-            self.coverImageView.alpha = 0.0
-            UIView.animate(withDuration: 0.35) {
-                self.coverImageView.alpha = 1.0
+    func setTrackImage(_ imageData: Data?) {
+        if let imageData = imageData {
+            if let image = UIImage(data: imageData) {
+                UIView.transition(with: coverImageView, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                    self.coverImageView.image = image
+                }, completion: nil)
+            } else {
+                // Handle the case where image data couldn't be converted to UIImage
             }
+        } else {
+            // Handle the case where image data is nil
         }
     }
     
