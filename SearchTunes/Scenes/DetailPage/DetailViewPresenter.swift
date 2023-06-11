@@ -157,6 +157,7 @@ extension DetailViewPresenter: DetailViewPresenterProtocol {
         guard let previewUrl = track.previewUrl, let audioURL = URL(string: previewUrl) else { return }
         interactor.loadAudio(from: audioURL) { [weak self] audioData in
             DispatchQueue.main.async {
+                // This part crashes sometimes
                 self?.view.hidePlayButtonLoading()
                 
                 do {

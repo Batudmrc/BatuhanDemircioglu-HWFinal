@@ -25,7 +25,7 @@ final class HomePageTableViewCellPresenter {
         tracks: Track,
         interactor: HomePageTableViewCellInteractorProtocol
     ) {
-        self.view = (view as! HomePageTableViewCell)
+        self.view = (view as? HomePageTableViewCell)
         self.tracks = tracks
         self.interactor = interactor
     }

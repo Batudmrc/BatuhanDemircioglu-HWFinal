@@ -40,8 +40,18 @@
 		3B0D3C1A2A2FDAD90046D441 /* DetailViewInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0D3C192A2FDAD90046D441 /* DetailViewInteractor.swift */; };
 		3B0D3C1C2A2FDB300046D441 /* DetailViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0D3C1B2A2FDB300046D441 /* DetailViewPresenter.swift */; };
 		3B0D3C1E2A2FDB600046D441 /* DetailViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0D3C1D2A2FDB600046D441 /* DetailViewRouter.swift */; };
+		3B25F2142A35B08500553710 /* MockHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B25F2132A35B08500553710 /* MockHomeViewController.swift */; };
+		3B25F2162A35B19E00553710 /* MockHomeInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B25F2152A35B19E00553710 /* MockHomeInteractor.swift */; };
+		3B25F2182A35B22700553710 /* MockHomeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B25F2172A35B22700553710 /* MockHomeRouter.swift */; };
+		3B25F21A2A35B25400553710 /* MockHomePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B25F2192A35B25400553710 /* MockHomePresenter.swift */; };
+		3B25F21E2A35B2D100553710 /* HomePresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B25F21D2A35B2D100553710 /* HomePresenterTests.swift */; };
 		3B3DA7F62A3382A7009E6443 /* HomePageCellInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3DA7F52A3382A7009E6443 /* HomePageCellInteractor.swift */; };
 		3B7C853E2A346B1600965CB5 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B7C853D2A346B1600965CB5 /* AudioManager.swift */; };
+		3BFD24A62A35D33B003E2045 /* Tracks.json in Resources */ = {isa = PBXBuildFile; fileRef = 3BFD24A52A35D33B003E2045 /* Tracks.json */; };
+		3BFD24A92A35E871003E2045 /* MockHomePageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BFD24A82A35E871003E2045 /* MockHomePageTableViewCell.swift */; };
+		3BFD24AB2A35EB54003E2045 /* MockHomePageTableViewCellInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BFD24AA2A35EB54003E2045 /* MockHomePageTableViewCellInteractor.swift */; };
+		3BFD24AD2A35EBAC003E2045 /* HomeCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BFD24AC2A35EBAC003E2045 /* HomeCellTests.swift */; };
+		3BFD24B12A35EFCC003E2045 /* MockHomePageTableViewCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BFD24B02A35EFCC003E2045 /* MockHomePageTableViewCellPresenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,8 +109,18 @@
 		3B0D3C192A2FDAD90046D441 /* DetailViewInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewInteractor.swift; sourceTree = "<group>"; };
 		3B0D3C1B2A2FDB300046D441 /* DetailViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewPresenter.swift; sourceTree = "<group>"; };
 		3B0D3C1D2A2FDB600046D441 /* DetailViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewRouter.swift; sourceTree = "<group>"; };
+		3B25F2132A35B08500553710 /* MockHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHomeViewController.swift; sourceTree = "<group>"; };
+		3B25F2152A35B19E00553710 /* MockHomeInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHomeInteractor.swift; sourceTree = "<group>"; };
+		3B25F2172A35B22700553710 /* MockHomeRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHomeRouter.swift; sourceTree = "<group>"; };
+		3B25F2192A35B25400553710 /* MockHomePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHomePresenter.swift; sourceTree = "<group>"; };
+		3B25F21D2A35B2D100553710 /* HomePresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePresenterTests.swift; sourceTree = "<group>"; };
 		3B3DA7F52A3382A7009E6443 /* HomePageCellInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageCellInteractor.swift; sourceTree = "<group>"; };
 		3B7C853D2A346B1600965CB5 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
+		3BFD24A52A35D33B003E2045 /* Tracks.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Tracks.json; sourceTree = "<group>"; };
+		3BFD24A82A35E871003E2045 /* MockHomePageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHomePageTableViewCell.swift; sourceTree = "<group>"; };
+		3BFD24AA2A35EB54003E2045 /* MockHomePageTableViewCellInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHomePageTableViewCellInteractor.swift; sourceTree = "<group>"; };
+		3BFD24AC2A35EBAC003E2045 /* HomeCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCellTests.swift; sourceTree = "<group>"; };
+		3BFD24B02A35EFCC003E2045 /* MockHomePageTableViewCellPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHomePageTableViewCellPresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +191,8 @@
 		3B0D3BDB2A2E7B870046D441 /* SearchTunesTests */ = {
 			isa = PBXGroup;
 			children = (
+				3B25F21B2A35B2B000553710 /* Tests */,
+				3B25F20F2A35A8C800553710 /* Mock */,
 				3B0D3BDC2A2E7B870046D441 /* SearchTunesTests.swift */,
 			);
 			path = SearchTunesTests;
@@ -268,6 +290,62 @@
 				3B024C562A30CEF2009BF16E /* FavoritesViewRouter.swift */,
 			);
 			path = FavoritesPage;
+			sourceTree = "<group>";
+		};
+		3B25F20F2A35A8C800553710 /* Mock */ = {
+			isa = PBXGroup;
+			children = (
+				3BFD24B22A360835003E2045 /* HomeCell */,
+				3B25F2102A35AF9800553710 /* HomePage */,
+				3BFD24A52A35D33B003E2045 /* Tracks.json */,
+			);
+			path = Mock;
+			sourceTree = "<group>";
+		};
+		3B25F2102A35AF9800553710 /* HomePage */ = {
+			isa = PBXGroup;
+			children = (
+				3B25F2132A35B08500553710 /* MockHomeViewController.swift */,
+				3B25F2152A35B19E00553710 /* MockHomeInteractor.swift */,
+				3B25F2172A35B22700553710 /* MockHomeRouter.swift */,
+				3B25F2192A35B25400553710 /* MockHomePresenter.swift */,
+			);
+			path = HomePage;
+			sourceTree = "<group>";
+		};
+		3B25F21B2A35B2B000553710 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				3BFD24A72A35E761003E2045 /* TrackCell */,
+				3B25F21C2A35B2BB00553710 /* HomePage */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		3B25F21C2A35B2BB00553710 /* HomePage */ = {
+			isa = PBXGroup;
+			children = (
+				3B25F21D2A35B2D100553710 /* HomePresenterTests.swift */,
+			);
+			path = HomePage;
+			sourceTree = "<group>";
+		};
+		3BFD24A72A35E761003E2045 /* TrackCell */ = {
+			isa = PBXGroup;
+			children = (
+				3BFD24AC2A35EBAC003E2045 /* HomeCellTests.swift */,
+			);
+			path = TrackCell;
+			sourceTree = "<group>";
+		};
+		3BFD24B22A360835003E2045 /* HomeCell */ = {
+			isa = PBXGroup;
+			children = (
+				3BFD24A82A35E871003E2045 /* MockHomePageTableViewCell.swift */,
+				3BFD24AA2A35EB54003E2045 /* MockHomePageTableViewCellInteractor.swift */,
+				3BFD24B02A35EFCC003E2045 /* MockHomePageTableViewCellPresenter.swift */,
+			);
+			path = HomeCell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -391,6 +469,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3BFD24A62A35D33B003E2045 /* Tracks.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -440,6 +519,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				3B0D3BDD2A2E7B870046D441 /* SearchTunesTests.swift in Sources */,
+				3BFD24AD2A35EBAC003E2045 /* HomeCellTests.swift in Sources */,
+				3B25F2142A35B08500553710 /* MockHomeViewController.swift in Sources */,
+				3BFD24AB2A35EB54003E2045 /* MockHomePageTableViewCellInteractor.swift in Sources */,
+				3BFD24A92A35E871003E2045 /* MockHomePageTableViewCell.swift in Sources */,
+				3BFD24B12A35EFCC003E2045 /* MockHomePageTableViewCellPresenter.swift in Sources */,
+				3B25F21A2A35B25400553710 /* MockHomePresenter.swift in Sources */,
+				3B25F2162A35B19E00553710 /* MockHomeInteractor.swift in Sources */,
+				3B25F2182A35B22700553710 /* MockHomeRouter.swift in Sources */,
+				3B25F21E2A35B2D100553710 /* HomePresenterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
