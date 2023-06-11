@@ -53,11 +53,18 @@ final class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setAccesIdentifiers()
         setupSpinner()
         setupGesture()
         setupImageView()
         presenter.viewDidLoad(context: context)
 
+    }
+    
+    func setAccesIdentifiers() {
+        playButtonImageView.accessibilityIdentifier = "playButton"
+        elapsedTimeLabel.accessibilityIdentifier = "elapsedTimeLabel"
+        remainingTimeLabel.accessibilityIdentifier = "remainingTimeLabel"
     }
     
     @IBAction func sliderAction(_ sender: Any) {

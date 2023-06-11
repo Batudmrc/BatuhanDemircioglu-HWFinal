@@ -66,13 +66,13 @@ extension HomePageTableViewCellPresenter: HomePageTableViewCellPresenterProtocol
         guard (tracks.collectionName != nil) else { return }
         guard (tracks.trackName != nil) else { return }
         guard (tracks.artistName != nil) else { return }
+        guard (tracks.trackPrice != nil) else { return }
         guard URL(string: tracks.artworkUrl100 ?? "") != nil else {
             return
         }
         interactor.loadImage(for: tracks) { [weak self] imageData in
             DispatchQueue.main.async {
                 self?.view?.spinner.isHidden = true
-                
                 if let imageData = imageData, let image = UIImage(data: imageData) {
                     // Animate the image appearing
                     self?.view?.coverImageView.alpha = 0.0
@@ -86,7 +86,12 @@ extension HomePageTableViewCellPresenter: HomePageTableViewCellPresenterProtocol
         self.view?.setTrackName(self.tracks.trackName ?? "")
         self.view?.setArtistName(self.tracks.artistName ?? "")
         self.view?.setCollectionName(self.tracks.collectionName ?? "")
-        self.view?.setPrice("$\(String(self.tracks.trackPrice!))")
+        if let trackPrice = self.tracks.trackPrice {
+            self.view?.setPrice("$\(String(trackPrice))")
+        } else {
+            self.view?.setPrice(nil)
+        }
+
     }
 }
 

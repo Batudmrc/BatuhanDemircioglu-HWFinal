@@ -9,33 +9,80 @@ import XCTest
 
 final class SearchTunesUITests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-
-        // In UI tests it is usually best to stop immediately when a failure occurs.
+    private var app: XCUIApplication!
+    
+    override func setUp() {
+        super.setUp()
         continueAfterFailure = false
-
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
+        app = XCUIApplication()
+        app.launchArguments.append("----UI TEST----")
     }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() throws {
-        // UI tests must launch the application that they test.
-        let app = XCUIApplication()
+    // Test to check the cells count
+    func test_SearchTextField()   {
         app.launch()
+        
+        XCTAssertTrue(app.searchTextField.isHittable)
+        XCTAssertTrue(app.isTableViewDisplayed)
+        app.searchTextField.tap()
+        // Making a search that returns 50 cells
+        app.searchTextField.typeText("Ezhel")
+        // Sleep 1 Seconds for debounce time
+        sleep(1)
+        // Checking if we get 50 cells
+        XCTAssertEqual(app.cellCount, 50)
+    }
+    
+    func test_PlayAudio() {
+        app.launch()
+        // Tap the textfield and type "Tarkan"
+        app.searchTextField.tap()
+        app.searchTextField.typeText("Tarkan")
+        sleep(1)
+        // Get an example cell. This code second cell.
+        let cell = app.tableView.cells.element(boundBy: 1)
+        cell.tap()
+        // Now test is in the DetailPage, wait 2seconds for navigation. Also wait for audio to load ( It takes approximately 70 seconds )
+        sleep(2)
+//   ( Hocam müziğin yüklenmesi bazen 70 saniye bazen 140 sürüyor ama sonra çalıyor çaldıktan sonra bi 70 saniye daha testin sonuçlanması için bekleniyor hocam :) )
+        app.playButton.tap()
+        sleep(1)
+        XCTAssertNotEqual(app.remainingTimeLabel.label, "00:00")
+    }
+}
 
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+
+extension XCUIApplication {
+    
+    var searchTextField: XCUIElement {
+        searchFields["searchTextField"]
+    }
+    
+    var isTextFieldDisplayed: Bool {
+        searchTextField.exists
+    }
+    
+    var tableView: XCUIElement {
+        tables["tableView"]
+    }
+    
+    var isTableViewDisplayed: Bool {
+        tableView.exists
+    }
+    
+    var cellCount: Int {
+        tableView.cells.count
     }
 
-    func testLaunchPerformance() throws {
-        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {
-            // This measures how long it takes to launch your application.
-            measure(metrics: [XCTApplicationLaunchMetric()]) {
-                XCUIApplication().launch()
-            }
-        }
+    var playButton: XCUIElement {
+        images["playButton"]
     }
+    
+    var remainingTimeLabel: XCUIElement {
+        staticTexts["remainingTimeLabel"]
+    }
+    
+    var elapsedTimeLabel: XCUIElement {
+        staticTexts["remainingTimeLabel"]
+    }
+    
 }

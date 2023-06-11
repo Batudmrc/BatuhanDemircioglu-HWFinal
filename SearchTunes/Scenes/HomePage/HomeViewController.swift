@@ -32,8 +32,13 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //setupTableView()
-        //presenter.load()
+        setAccesIdentifiers()
+        
+    }
+    
+    func setAccesIdentifiers() {
+        searchBar.searchTextField.accessibilityIdentifier = "searchTextField"
+        tableView.accessibilityIdentifier = "tableView"
     }
     
     
@@ -66,7 +71,6 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
                 interactor: interactor
             )
             cell.homeViewController = self
-            
             cell.cellPresenter = presenter
             cell.spinner.startAnimating()
             cell.spinner.isHidden = false
