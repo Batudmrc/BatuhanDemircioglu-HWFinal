@@ -8,7 +8,6 @@
 import Foundation
 
 protocol FavoritesViewInteractorProtocol {
-    
 }
 
 final class FavoritesViewInteractor {

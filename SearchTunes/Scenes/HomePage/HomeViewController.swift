@@ -27,20 +27,17 @@ class HomeViewController: UIViewController {
     var presenter: HomePresenterProtocol!
     let interactor: HomePageTableViewCellInteractorProtocol = HomePageTableViewCellInteractor()
     let messageLabel = UILabel()
-    private var currentlyPlayingIndex: Int? = nil
-    var audioPlayers: [IndexPath: AVAudioPlayer] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setAccesIdentifiers()
-        
+        setupSearchBar()
     }
     
     func setAccesIdentifiers() {
         searchBar.searchTextField.accessibilityIdentifier = "searchTextField"
         tableView.accessibilityIdentifier = "tableView"
     }
-    
     
     @IBAction func favoriteButtonTapped(_ sender: Any) {
         presenter.favoriteButtonTapped()
@@ -80,6 +77,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension HomeViewController: HomeViewControllerProtocol, UISearchBarDelegate {
+    
     func setupEmptyView() {
         messageLabel.textAlignment = .center
         messageLabel.textColor = .gray
@@ -108,6 +106,39 @@ extension HomeViewController: HomeViewControllerProtocol, UISearchBarDelegate {
     
     func hideLoading() {
         
+    }
+    
+    func setupSearchBar() {
+        searchBar.delegate = self
+        searchBar.placeholder = "Search for a track"
+        searchBar.backgroundImage = UIImage() // Remove background image
+        searchBar.searchBarStyle = .minimal // Apply minimal style
+        searchBar.tintColor = .black // Set tint color for cursor and cancel button
+        // Add padding to the left side of the search bar's leftBarButtonItem
+        if let searchTextField = searchBar.value(forKey: "searchField") as? UITextField {
+            if let leftView = searchTextField.leftView {
+                searchTextField.leftViewMode = .always
+                searchTextField.autocorrectionType = .no
+                let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 24, height: leftView.frame.height)) // Adjust padding width here
+                searchTextField.leftView = paddingView
+                searchTextField.backgroundColor = .white
+                paddingView.addSubview(leftView)
+            }
+        }
+        searchBar.layer.shadowColor = UIColor.black.cgColor
+        searchBar.layer.shadowOffset = CGSize(width: 0, height: 2)
+        searchBar.layer.shadowRadius = 4
+        searchBar.layer.shadowOpacity = 0.3
+        // Customize search bar text field
+        if let textField = searchBar.value(forKey: "searchField") as? UITextField {
+            textField.textColor = .black // Set text color
+            textField.font = UIFont.systemFont(ofSize: 16) // Set font
+            textField.backgroundColor = .white
+            textField.layer.cornerRadius = 8 // Set corner radius
+            textField.layer.masksToBounds = true
+            textField.autocorrectionType = .no
+            // Clip to bounds
+        }
     }
     
     func reloadData() {

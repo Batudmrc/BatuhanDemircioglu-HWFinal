@@ -25,6 +25,7 @@ protocol DetailViewControllerProtocol: AnyObject {
     func updateSlider(_ currentTime: TimeInterval?)
     func setupSlider(_ duration: TimeInterval?)
     func changeSliderAction() -> Float
+    func showDiscardAlert(completion: (() -> Void)?)
 }
 
 final class DetailViewController: UIViewController {
@@ -58,11 +59,11 @@ final class DetailViewController: UIViewController {
         setupGesture()
         setupImageView()
         presenter.viewDidLoad(context: context)
-
     }
     
     func setAccesIdentifiers() {
         playButtonImageView.accessibilityIdentifier = "playButton"
+        favoriteButtonImageView.accessibilityIdentifier = "favoriteButton"
         elapsedTimeLabel.accessibilityIdentifier = "elapsedTimeLabel"
         remainingTimeLabel.accessibilityIdentifier = "remainingTimeLabel"
     }
@@ -70,21 +71,28 @@ final class DetailViewController: UIViewController {
     @IBAction func sliderAction(_ sender: Any) {
         presenter.changeSliderAction()
     }
-    //TODO: Migrate use this in the favorite
-    func loadFavorite() {
-        let request: NSFetchRequest<Item> = Item.fetchRequest()
-        do {
-            favoriteTracks = try context.fetch(request)
-            for i in favoriteTracks {
-                print(i.collectionName as Any)
-            }
-        } catch {
-            print(error)
-        }
-    }
 }
 
 extension DetailViewController: DetailViewControllerProtocol {
+    
+    func showDiscardAlert(completion: (() -> Void)?) {
+            let alertController = UIAlertController(
+                title: "Discard Favorite",
+                message: "Are you sure you want to discard this favorite?",
+                preferredStyle: .alert
+            )
+
+            let discardAction = UIAlertAction(title: "Yes", style: .destructive) { _ in
+                completion?()
+            }
+            alertController.addAction(discardAction)
+
+            let cancelAction = UIAlertAction(title: "No", style: .cancel, handler: nil)
+            alertController.addAction(cancelAction)
+
+            present(alertController, animated: true, completion: nil)
+        }
+    
     func setPrice(_ text: String?) {
         priceButton.setTitle(text, for: .normal)
     }
@@ -99,11 +107,9 @@ extension DetailViewController: DetailViewControllerProtocol {
     
     func updateSlider(_ currentTime: TimeInterval?) {
         musicSlider.value = Float(currentTime ?? 0)
-        
         let elapsedSeconds = Int(currentTime ?? 0)
             let elapsedMinutes = elapsedSeconds / 60
             let elapsedSecondsRemainder = elapsedSeconds % 60
-            
             
             // Calculate remaining time
         let remainingSeconds = Int(30) - elapsedSeconds

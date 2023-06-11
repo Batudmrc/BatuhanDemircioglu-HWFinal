@@ -11,12 +11,12 @@ import AVFoundation
 protocol FavoritesViewControllerProtocol: AnyObject {
     
 }
-
 class FavoritesViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
     var presenter: FavoritesViewPresenterProtocol!
+    var interactor: HomePageTableViewCellInteractorProtocol = HomePageTableViewCellInteractor()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -41,6 +41,8 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource, F
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: HomePageTableViewCell.identifier, for: indexPath) as! HomePageTableViewCell
         
+        
+        
         if let favorite = presenter.favorite(at: indexPath.row) {
             // Configure the cell with favorite data
             cell.setCollectionName(favorite.collectionName!)
@@ -62,7 +64,7 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource, F
                     let isPlaying = audioManager.isPlaying && audioManager.currentPlayingUrl == previewUrl
             cell.updatePlayButtonImageFav(isPlaying)
         }
-        return cell
+        return cell 
     }
     
     @objc private func playerImageViewTapped(sender: UITapGestureRecognizer) {

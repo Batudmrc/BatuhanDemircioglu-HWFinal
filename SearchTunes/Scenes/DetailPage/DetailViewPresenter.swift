@@ -98,20 +98,15 @@ extension DetailViewPresenter: DetailViewPresenterProtocol {
     }
     
     func favoriteButtonTapped(context: NSManagedObjectContext) {
-        guard let track = view.getTrack(),
-              let trackId = track.trackId else { return }
-        
         if isFavorite {
-            discardFavorite(context: context)
+            view.showDiscardAlert {
+                self.discardFavorite(context: context)
+            }
         } else {
             addToFavorites(context: context)
         }
-        // Check if the track exists in the favoriteTracks array
-        let isFavoriteTrack = favoriteTracks.contains { $0.trackId == String(trackId) }
-        // Update the isFavorite flag based on whether the track is in the array
-        isFavorite = isFavoriteTrack
         
-        view.updateLikedButton()
+        
     }
     
     @objc func updateSlider() {
@@ -119,6 +114,15 @@ extension DetailViewPresenter: DetailViewPresenterProtocol {
     }
     
     func viewDidLoad(context: NSManagedObjectContext) {
+        
+        guard let track = view.getTrack(),
+              let trackId = track.trackId else { return }
+        // Check if the track exists in the favoriteTracks array
+        let isFavoriteTrack = favoriteTracks.contains { $0.trackId == String(trackId) }
+        // Update the isFavorite flag based on whether the track is in the array
+        isFavorite = isFavoriteTrack
+        
+        view.updateLikedButton()
         
         timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(updateSlider), userInfo: nil, repeats: true)
         //MARK: Fetch and Check if selected track is favorite
@@ -157,12 +161,13 @@ extension DetailViewPresenter: DetailViewPresenterProtocol {
         guard let previewUrl = track.previewUrl, let audioURL = URL(string: previewUrl) else { return }
         interactor.loadAudio(from: audioURL) { [weak self] audioData in
             DispatchQueue.main.async {
+                guard let self = self else { return }
                 // This part crashes sometimes
-                self?.view.hidePlayButtonLoading()
+                self.view.hidePlayButtonLoading()
                 
                 do {
-                    self?.player = try AVAudioPlayer(data: audioData)
-                    self?.view.setupSlider(self?.player?.duration)
+                    self.player = try AVAudioPlayer(data: audioData)
+                    self.view.setupSlider(self.player?.duration)
                 } catch {
                     print("Failed to create AVAudioPlayer: \(error)")
                 }
