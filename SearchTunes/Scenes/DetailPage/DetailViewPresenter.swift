@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NetworkPackage
 import CoreData // importing this for context NSManagedObjectContext
 import AVFoundation
 
@@ -28,7 +27,6 @@ protocol DetailViewPresenterProtocol {
 
 final class DetailViewPresenter {
     
-    private let service: NetworkManagerProtocol = NetworkManager()
     unowned var view: DetailViewControllerProtocol!
     let router: DetailViewRouterProtocol!
     private let interactor: DetailViewInteractorProtocol
@@ -45,7 +43,7 @@ final class DetailViewPresenter {
 }
 
 extension DetailViewPresenter: DetailViewPresenterProtocol {
-    
+
     func forwardButtonTapped() {
         guard let currentTime = player?.currentTime else { return }
         let newTime = currentTime + 5.0
@@ -105,8 +103,6 @@ extension DetailViewPresenter: DetailViewPresenterProtocol {
         } else {
             addToFavorites(context: context)
         }
-        
-        
     }
     
     @objc func updateSlider() {
@@ -130,6 +126,10 @@ extension DetailViewPresenter: DetailViewPresenterProtocol {
         guard let track = view.getTrack(),
               let trackId = track.trackId else { return }
         // migrate this to interactor
+        interactor.fetchFavoriteTracks(context: context, for: track) { matchingItems in
+            //let isFavorite = !matchingItems.isEmpty
+            self.view.updateLikedButton()
+        }
         let fetchRequest: NSFetchRequest<Item> = Item.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "trackId == %@", String(trackId))
         
@@ -153,7 +153,8 @@ extension DetailViewPresenter: DetailViewPresenterProtocol {
         view.setTrackName(track.trackName ?? "")
         view.setArtistName(track.artistName ?? "")
         view.setCollectionName(track.collectionName ?? "")
-        view.setPrice("Buy for : $\(String(track.trackPrice!))")
+        // Safely Unwrap this
+        //view.setPrice("Buy for : $\(String(track.trackPrice!))" )
         
         view.showPlayButtonLoading()
         

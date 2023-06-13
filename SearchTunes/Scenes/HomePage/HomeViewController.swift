@@ -19,6 +19,8 @@ protocol HomeViewControllerProtocol: AnyObject {
 
 class HomeViewController: UIViewController {
     
+    @IBOutlet weak var topView: UIView!
+    @IBOutlet var myView: UIView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     private let service: NetworkManagerProtocol = NetworkManager()
@@ -32,11 +34,25 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         setAccesIdentifiers()
         setupSearchBar()
+        setGradient()
     }
     
     func setAccesIdentifiers() {
         searchBar.searchTextField.accessibilityIdentifier = "searchTextField"
         tableView.accessibilityIdentifier = "tableView"
+    }
+    
+    func setGradient() {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [
+            UIColor.systemIndigo.cgColor,  // Top color (light gray)
+            UIColor.darkGray.cgColor    // Bottom color (darker gray)
+        ]
+        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0)
+        gradientLayer.endPoint = CGPoint(x: 0.5, y: 0.2)
+        gradientLayer.frame = UIScreen.main.bounds  // Set the frame based on the screen's bounds
+        topView.layer.insertSublayer(gradientLayer, at: 0)
+        
     }
     
     @IBAction func favoriteButtonTapped(_ sender: Any) {
@@ -80,8 +96,8 @@ extension HomeViewController: HomeViewControllerProtocol, UISearchBarDelegate {
     
     func setupEmptyView() {
         messageLabel.textAlignment = .center
-        messageLabel.textColor = .gray
-        messageLabel.font = UIFont.systemFont(ofSize: 16)
+        messageLabel.textColor = .white
+        messageLabel.font = UIFont.systemFont(ofSize: 20)
         messageLabel.text = "No items to display"
         tableView.addSubview(messageLabel)
         messageLabel.translatesAutoresizingMaskIntoConstraints = false

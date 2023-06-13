@@ -16,7 +16,6 @@ protocol HomePageTableViewCellProtocol: AnyObject {
     func setTrackName(_ text: String)
     func setPrice(_ text: String?)
     func updatePlayButtonImage(_ imageName: String)
-    func updatePlayButtonImageFav(_ isPlaying: Bool)
     func showPlayButtonLoading()
     func hidePlayButtonLoading()
 }
@@ -54,10 +53,16 @@ class HomePageTableViewCell: UITableViewCell {
         }
         
         setupGesture()
+        coverImageView.layer.cornerRadius = 8.0
+            coverImageView.layer.masksToBounds = true
+        
+        coverImageView.layer.borderWidth = 1.0
+            coverImageView.layer.borderColor = UIColor.white.cgColor
     }
     @objc private func playerImageViewTapped() {
         
         cellPresenter.playButtonTapped()
+        
     }
     
     
@@ -70,13 +75,7 @@ class HomePageTableViewCell: UITableViewCell {
 }
 
 extension HomePageTableViewCell: HomePageTableViewCellProtocol {
-    func updatePlayButtonImageFav(_ isPlaying: Bool) {
-        let image = isPlaying ? UIImage(systemName: "pause.circle.fill") : UIImage(systemName: "play.circle.fill")
-            // Set the image to your play button image view
-            playerImageView.image = image
-    }
-    
-    
+
     func updatePlayButtonImage(_ imageName: String) {
         let scaleTransform = CGAffineTransform(scaleX: 0.9, y: 0.9)
         
@@ -102,6 +101,9 @@ extension HomePageTableViewCell: HomePageTableViewCellProtocol {
 
     
     func showPlayButtonLoading() {
+        spinner.backgroundColor = .white
+        spinner.tintColor = .white
+        spinner.color = .white
         playButtonSpinner.startAnimating()
     }
     

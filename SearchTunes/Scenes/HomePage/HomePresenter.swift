@@ -81,7 +81,10 @@ extension HomePresenter: HomeInteractorOutput {
         view?.hideLoading()
         switch result {
         case .success(let tracks):
-            self.tracks = tracks.results!
+            let filteredResults = tracks.results!.filter { track in
+                    return track.kind == "song"
+                }
+            self.tracks = filteredResults
             view?.reloadData()
         case .failure(let failure):
             //TODO: showError

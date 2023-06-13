@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import CoreData
 
 protocol DetailViewControllerProtocol: AnyObject {
     func setTrackName(_ text: String)
@@ -30,6 +29,9 @@ protocol DetailViewControllerProtocol: AnyObject {
 
 final class DetailViewController: UIViewController {
     
+    @IBOutlet weak var shareButtonImageView: UIImageView!
+    
+    @IBOutlet var myView: UIView!
     @IBOutlet weak var forwardButton: UIImageView!
     @IBOutlet weak var backButton: UIImageView!
     @IBOutlet weak var remainingTimeLabel: UILabel!
@@ -59,6 +61,7 @@ final class DetailViewController: UIViewController {
         setupGesture()
         setupImageView()
         presenter.viewDidLoad(context: context)
+        setGradient()
     }
     
     func setAccesIdentifiers() {
@@ -71,27 +74,39 @@ final class DetailViewController: UIViewController {
     @IBAction func sliderAction(_ sender: Any) {
         presenter.changeSliderAction()
     }
+    
+    func setGradient() {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [
+            UIColor.lightGray.cgColor,  // Top color (light gray)
+            UIColor.darkGray.cgColor    // Bottom color (darker gray)
+        ]
+        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0)
+        gradientLayer.endPoint = CGPoint(x: 0.5, y: 1)
+        gradientLayer.frame = UIScreen.main.bounds  // Set the frame based on the screen's bounds
+        myView.layer.insertSublayer(gradientLayer, at: 0)
+    }
 }
 
 extension DetailViewController: DetailViewControllerProtocol {
     
     func showDiscardAlert(completion: (() -> Void)?) {
-            let alertController = UIAlertController(
-                title: "Discard Favorite",
-                message: "Are you sure you want to discard this favorite?",
-                preferredStyle: .alert
-            )
-
-            let discardAction = UIAlertAction(title: "Yes", style: .destructive) { _ in
-                completion?()
-            }
-            alertController.addAction(discardAction)
-
-            let cancelAction = UIAlertAction(title: "No", style: .cancel, handler: nil)
-            alertController.addAction(cancelAction)
-
-            present(alertController, animated: true, completion: nil)
+        let alertController = UIAlertController(
+            title: "Discard Favorite",
+            message: "Are you sure you want to discard this favorite?",
+            preferredStyle: .alert
+        )
+        
+        let discardAction = UIAlertAction(title: "Yes", style: .destructive) { _ in
+            completion?()
         }
+        alertController.addAction(discardAction)
+        
+        let cancelAction = UIAlertAction(title: "No", style: .cancel, handler: nil)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true, completion: nil)
+    }
     
     func setPrice(_ text: String?) {
         priceButton.setTitle(text, for: .normal)
@@ -108,22 +123,22 @@ extension DetailViewController: DetailViewControllerProtocol {
     func updateSlider(_ currentTime: TimeInterval?) {
         musicSlider.value = Float(currentTime ?? 0)
         let elapsedSeconds = Int(currentTime ?? 0)
-            let elapsedMinutes = elapsedSeconds / 60
-            let elapsedSecondsRemainder = elapsedSeconds % 60
-            
-            // Calculate remaining time
+        let elapsedMinutes = elapsedSeconds / 60
+        let elapsedSecondsRemainder = elapsedSeconds % 60
+        
+        // Calculate remaining time
         let remainingSeconds = Int(30) - elapsedSeconds
-            let remainingMinutes = remainingSeconds / 60
-            let remainingSecondsRemainder = remainingSeconds % 60
-            
+        let remainingMinutes = remainingSeconds / 60
+        let remainingSecondsRemainder = remainingSeconds % 60
+        
         
         UIView.transition(with: elapsedTimeLabel, duration: 0.12, options: .transitionCrossDissolve, animations: {
-                self.elapsedTimeLabel.text = String(format: "%02d:%02d", elapsedMinutes, elapsedSecondsRemainder)
-            }, completion: nil)
-            
-            UIView.transition(with: remainingTimeLabel, duration: 0.12, options: .transitionCrossDissolve, animations: {
-                self.remainingTimeLabel.text = String(format: "-%02d:%02d", remainingMinutes, remainingSecondsRemainder)
-            }, completion: nil)
+            self.elapsedTimeLabel.text = String(format: "%02d:%02d", elapsedMinutes, elapsedSecondsRemainder)
+        }, completion: nil)
+        
+        UIView.transition(with: remainingTimeLabel, duration: 0.12, options: .transitionCrossDissolve, animations: {
+            self.remainingTimeLabel.text = String(format: "-%02d:%02d", remainingMinutes, remainingSecondsRemainder)
+        }, completion: nil)
     }
     
     func updatePlayButtonImage(_ imageName: String) {
@@ -167,12 +182,26 @@ extension DetailViewController: DetailViewControllerProtocol {
         let tapForwardGesture = UITapGestureRecognizer(target: self, action: #selector(forwardButtonTapped))
         forwardButton.isUserInteractionEnabled = true
         forwardButton.addGestureRecognizer(tapForwardGesture)
-
+        
         let tapBackGesture = UITapGestureRecognizer(target: self, action: #selector(backButtonTapped))
         backButton.isUserInteractionEnabled = true
         backButton.addGestureRecognizer(tapBackGesture)
+        
+        let tapShareGesture = UITapGestureRecognizer(target: self, action: #selector(shareButtonTapped))
+        shareButtonImageView.isUserInteractionEnabled = true
+        shareButtonImageView.addGestureRecognizer(tapShareGesture)
     }
     //MARK: Gesture functions
+    
+    @objc func shareButtonTapped() {
+        guard let url = URL(string: (track?.trackViewUrl)!) else { return }
+        let activityViewController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+        DispatchQueue.main.async {
+            activityViewController.popoverPresentationController?.sourceView = self.view
+        }
+        present(activityViewController, animated: true, completion: nil)
+        
+    }
     
     @objc func playButtonTapped() {
         presenter.playButtonTapped()
@@ -185,28 +214,29 @@ extension DetailViewController: DetailViewControllerProtocol {
     @objc func forwardButtonTapped() {
         presenter.forwardButtonTapped()
     }
-
+    
     @objc func backButtonTapped() {
         presenter.backButtonTapped()
     }
-
     
     func updateLikedButton() {
         let isFavorite = presenter.getIsFavorite()
         let imageName = isFavorite ? "heart.fill" : "heart"
         let image = UIImage(systemName: imageName)
-        
-        if isFavorite {
-            favoriteButtonImageView.tintColor = .red
-        } else {
-            favoriteButtonImageView.tintColor = .darkGray
+        DispatchQueue.main.async {
+            if isFavorite {
+                self.favoriteButtonImageView.tintColor = .red
+            } else {
+                self.favoriteButtonImageView.tintColor = .white
+            }
+            
+            UIView.transition(with: self.favoriteButtonImageView, duration: 0.2, options: [.transitionCrossDissolve], animations: {
+                self.favoriteButtonImageView.transform = CGAffineTransform(scaleX: 1.8, y: 1.8)
+                self.favoriteButtonImageView.image = image
+                self.favoriteButtonImageView.transform = .identity
+            }, completion: nil)
         }
         
-        UIView.transition(with: favoriteButtonImageView, duration: 0.2, options: [.transitionCrossDissolve], animations: {
-            self.favoriteButtonImageView.transform = CGAffineTransform(scaleX: 1.8, y: 1.8)
-            self.favoriteButtonImageView.image = image
-            self.favoriteButtonImageView.transform = .identity
-        }, completion: nil)
     }
     
     func setTrackImage(_ imageData: Data?) {
@@ -274,5 +304,7 @@ extension DetailViewController: DetailViewControllerProtocol {
         playButtonImageView.addSubview(playButtonSpinner)
         playButtonSpinner.centerXAnchor.constraint(equalTo: playButtonImageView.centerXAnchor).isActive = true
         playButtonSpinner.centerYAnchor.constraint(equalTo: playButtonImageView.centerYAnchor).isActive = true
+        spinner.color = .white
+        playButtonSpinner.color = .white
     }
 }

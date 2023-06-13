@@ -13,16 +13,17 @@ protocol FavoritesViewControllerProtocol: AnyObject {
 }
 class FavoritesViewController: UIViewController {
     
+    @IBOutlet var myView: UIView!
     @IBOutlet weak var tableView: UITableView!
     
     var presenter: FavoritesViewPresenterProtocol!
     var interactor: HomePageTableViewCellInteractorProtocol = HomePageTableViewCellInteractor()
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setGradient()
         setupTableView()
-        presenter.fetchFavorites()
-        // Do any additional setup after loading the view.
+        //presenter.fetchFavorites()
+        presenter.viewDidLoad()
     }
     
     func setupTableView() {
@@ -30,6 +31,20 @@ class FavoritesViewController: UIViewController {
         tableView.delegate = self
         tableView.register(UINib(nibName: HomePageTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: HomePageTableViewCell.identifier)
         tableView.showsVerticalScrollIndicator = false
+        tableView.backgroundColor = .darkGray
+    }
+    
+    func setGradient() {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [
+            UIColor.systemIndigo.cgColor,  // Top color (light gray)
+            UIColor.darkGray.cgColor    // Bottom color (darker gray)
+        ]
+        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0)
+        gradientLayer.endPoint = CGPoint(x: 0.5, y: 0.2)
+        gradientLayer.frame = UIScreen.main.bounds  // Set the frame based on the screen's bounds
+        myView.layer.insertSublayer(gradientLayer, at: 0)
+        
     }
 }
 
@@ -40,8 +55,6 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource, F
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: HomePageTableViewCell.identifier, for: indexPath) as! HomePageTableViewCell
-        
-        
         
         if let favorite = presenter.favorite(at: indexPath.row) {
             // Configure the cell with favorite data
@@ -58,14 +71,10 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource, F
                 let image = UIImage(data: imageData)
                 cell.setCoverImage(image!)
             }
-            let audioManager = AudioManager.shared
-                    let previewUrlString = favorite.previewAudio ?? ""
-                    let previewUrl = URL(string: previewUrlString)
-                    let isPlaying = audioManager.isPlaying && audioManager.currentPlayingUrl == previewUrl
-            cell.updatePlayButtonImageFav(isPlaying)
         }
-        return cell 
+        return cell
     }
+
     
     @objc private func playerImageViewTapped(sender: UITapGestureRecognizer) {
         guard let tappedView = sender.view as? UIImageView,
@@ -77,10 +86,7 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource, F
             return
         }
         let audioManager = AudioManager.shared
-        
         if audioManager.isPlaying, let currentPlayingUrl = audioManager.currentPlayingUrl, currentPlayingUrl == previewUrl {
-            
-
             audioManager.pauseAudio()
         } else {
             audioManager.playAudio(from: previewUrl)

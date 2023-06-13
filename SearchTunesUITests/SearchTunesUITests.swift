@@ -64,6 +64,12 @@ final class SearchTunesUITests: XCTestCase {
         app.favButton.tap()
         
     }
+    
+    func test_Example() {
+                
+
+
+    }
 }
 
 extension XCUIApplication {

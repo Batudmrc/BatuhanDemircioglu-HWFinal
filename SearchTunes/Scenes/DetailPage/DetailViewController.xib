@@ -19,9 +19,11 @@
                 <outlet property="favoriteButtonImageView" destination="qvM-Dc-eM4" id="PNB-dH-ddn"/>
                 <outlet property="forwardButton" destination="kE0-7s-k66" id="Tp4-ru-ZYG"/>
                 <outlet property="musicSlider" destination="4om-Ym-4Mk" id="3n5-7q-b3e"/>
+                <outlet property="myView" destination="i5M-Pr-FkT" id="4Gy-pA-O2d"/>
                 <outlet property="playButtonImageView" destination="4U4-iD-XZl" id="H3p-BG-hWE"/>
                 <outlet property="priceButton" destination="YJR-zF-kNh" id="MxI-Hm-RJr"/>
                 <outlet property="remainingTimeLabel" destination="4SO-79-MbE" id="koo-hE-8dK"/>
+                <outlet property="shareButtonImageView" destination="cDM-fC-j7q" id="20c-Xb-vLb"/>
                 <outlet property="trackNameLabel" destination="oZY-zw-mpN" id="1x7-x9-dxP"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -48,13 +50,13 @@
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="My Baby (Slow + Reverb)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oZY-zw-mpN">
                             <rect key="frame" x="0.0" y="0.0" width="271.5" height="44"/>
                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
-                            <nil key="textColor"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="XOXO" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rfv-Wf-hzW">
                             <rect key="frame" x="0.0" y="45" width="46" height="44"/>
                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
-                            <nil key="textColor"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
@@ -64,6 +66,7 @@
                 </stackView>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="play.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="4U4-iD-XZl">
                     <rect key="frame" x="157.5" y="535.5" width="60" height="59"/>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="60" id="Oxk-tL-kbk"/>
                         <constraint firstAttribute="width" constant="60" id="q8W-Hp-tui"/>
@@ -86,7 +89,8 @@
                     </buttonConfiguration>
                 </button>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="square.and.arrow.up" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="cDM-fC-j7q">
-                    <rect key="frame" x="319" y="622" width="32" height="33"/>
+                    <rect key="frame" x="331" y="622" width="32" height="33"/>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="32" id="WhV-u2-PGL"/>
                         <constraint firstAttribute="height" constant="32" id="l2q-Q4-vD3"/>
@@ -97,6 +101,8 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="oqP-6s-xWA"/>
                     </constraints>
+                    <color key="minimumTrackTintColor" systemColor="systemBackgroundColor"/>
+                    <color key="maximumTrackTintColor" white="1" alpha="0.24800807119205298" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <connections>
                         <action selector="sliderAction:" destination="-1" eventType="valueChanged" id="KKL-wl-4A1"/>
                     </connections>
@@ -104,13 +110,13 @@
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Dn-ui-EOj">
                     <rect key="frame" x="24" y="505" width="46" height="20.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <nil key="textColor"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4SO-79-MbE">
                     <rect key="frame" x="305" y="505" width="46" height="20.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <nil key="textColor"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="forward" translatesAutoresizingMaskIntoConstraints="NO" id="kE0-7s-k66">
@@ -122,7 +128,7 @@
                 </imageView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="kE0-7s-k66" firstAttribute="top" secondItem="4om-Ym-4Mk" secondAttribute="bottom" constant="42" id="23s-pb-oHK"/>
                 <constraint firstItem="yYa-P5-zf9" firstAttribute="top" secondItem="sFQ-Q0-XXQ" secondAttribute="bottom" constant="36" id="2Vw-2O-CbA"/>
@@ -152,7 +158,7 @@
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="qvM-Dc-eM4" secondAttribute="trailing" constant="18" id="lDh-vr-8lo"/>
                 <constraint firstItem="sFQ-Q0-XXQ" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="24" id="lHh-Hs-e9m"/>
                 <constraint firstItem="3Dn-ui-EOj" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="24" id="wAm-D5-XXx"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="cDM-fC-j7q" secondAttribute="trailing" constant="24" id="yAD-sb-T4z"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="cDM-fC-j7q" secondAttribute="trailing" constant="12" id="yAD-sb-T4z"/>
             </constraints>
             <point key="canvasLocation" x="130.40000000000001" y="-12.143928035982009"/>
         </view>

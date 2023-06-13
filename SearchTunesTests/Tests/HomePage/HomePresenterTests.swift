@@ -50,13 +50,17 @@ class HomePresenterTests: XCTestCase {
         XCTAssertTrue(mockView.setupTableViewCalled, "setupTableView should be called")
         XCTAssertTrue(mockView.setupEmptyViewCalled, "setupEmptyView should be called")
         
+        
+        XCTAssertFalse(mockInteractor.fetchTracksCalled, "fetchTracks should be called")
+        XCTAssertNotEqual(mockInteractor.fetchTracksSearchText, searchText, "fetchTracks should be called with correct searchText")
+        
         mockInteractor.fetchTracks(with: searchText)
+        
         XCTAssertTrue(mockInteractor.fetchTracksCalled, "fetchTracks should be called")
         XCTAssertEqual(mockInteractor.fetchTracksSearchText, searchText, "fetchTracks should be called with correct searchText")
     }
     
     func testExample() {
-        
         
         mockInteractor.fetchTracks(with: "Ezhel")
         XCTAssertTrue(mockInteractor.fetchTracksCalled)
@@ -65,7 +69,6 @@ class HomePresenterTests: XCTestCase {
     
     func testFetchTracksOutput() {
 
-        
         presenter.handleTrackResult(.success(.response))
         
         XCTAssertEqual(presenter.numberOfItems, 1)

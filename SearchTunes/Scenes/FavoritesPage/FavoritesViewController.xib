@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FavoritesViewController" customModule="SearchTunes" customModuleProvider="target">
             <connections>
+                <outlet property="myView" destination="i5M-Pr-FkT" id="ZdS-KX-dta"/>
                 <outlet property="tableView" destination="cyo-Ys-YI0" id="Dbv-97-2B7"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>

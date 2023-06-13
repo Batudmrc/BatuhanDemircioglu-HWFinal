@@ -14,6 +14,7 @@ protocol DetailViewInteractorProtocol {
     func discardFavorite(context: NSManagedObjectContext)
     func downloadImage(for track: Track, completion: @escaping (Data?) -> Void)
     func loadAudio(from url: URL, completion: @escaping (Data) -> Void)
+    func fetchFavoriteTracks(context: NSManagedObjectContext,for track: Track,completion: @escaping ([Item]) -> Void)
 }
 
 protocol DetailViewInteractorOutput {
@@ -29,6 +30,24 @@ final class DetailViewInteractor {
 }
 
 extension DetailViewInteractor: DetailViewInteractorProtocol {
+    
+    func fetchFavoriteTracks(context: NSManagedObjectContext, for track: Track, completion: @escaping ([Item]) -> Void) {
+            DispatchQueue.global().async { [weak self] in
+                guard self != nil else { return }
+                
+                let fetchRequest: NSFetchRequest<Item> = Item.fetchRequest()
+                fetchRequest.predicate = NSPredicate(format: "trackId == %@", String(track.trackId!))
+                
+                do {
+                    let matchingItems = try context.fetch(fetchRequest)
+                    completion(matchingItems)
+                } catch {
+                    print("Failed to fetch favorite tracks: \(error)")
+                    completion([])
+                }
+            }
+        }
+    
     
     func loadAudio(from url: URL, completion: @escaping (Data) -> Void) {
         DispatchQueue.global().async {
@@ -53,14 +72,13 @@ extension DetailViewInteractor: DetailViewInteractorProtocol {
         
         service.downloadImageData(fromURL: imageURL!, completion: completion)
     }
-
     
     func addToFavorites(context: NSManagedObjectContext) {
         
         presenter?.changeFavoriteStatus(status: true)
         guard let track = presenter!.getTrack(),
               let trackId = track.trackId else { return }
-        let newFavTrack = Item(context: context)
+        let newFavTrack = Item(context: AppDelegate.customPersistenContainer)
         newFavTrack.collectionName = track.collectionName
         newFavTrack.trackName = track.trackName
         newFavTrack.previewAudio = track.previewUrl

@@ -7,12 +7,12 @@
 
 import Foundation
 import CoreData
-import UIKit
 
 protocol FavoritesViewPresenterProtocol: AnyObject {
     func fetchFavorites()
     func numberOfFavorites() -> Int
     func favorite(at index: Int) -> Item?
+    func viewDidLoad()
 }
 
 final class FavoritesViewPresenter {
@@ -27,12 +27,12 @@ final class FavoritesViewPresenter {
 }
 
 extension FavoritesViewPresenter: FavoritesViewPresenterProtocol {
+    func viewDidLoad() {
+        fetchFavorites()
+    }
     func fetchFavorites() {
         // Fetch favorites from Core Data
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return
-        }
-        let context = appDelegate.persistentContainer.viewContext
+        let context = AppDelegate.customPersistenContainer
         let fetchRequest: NSFetchRequest<Item> = Item.fetchRequest()
         
         do {
@@ -53,6 +53,4 @@ extension FavoritesViewPresenter: FavoritesViewPresenterProtocol {
         }
         return favorites[index]
     }
-    
-    
 }

@@ -19,7 +19,7 @@ class HomePageTableViewCellTests: XCTestCase {
     override func setUp() {
         super.setUp()
         view = .init()
-        let tracks = Track(artistName: "Ezhel", collectionName: "Müptezel", trackName: "AYA", collectionCensoredName: "erhan", artworkUrl100: "someUrl", collectionPrice: 14.99, trackPrice: 14.99, primaryGenreName: "testo", previewUrl: "someurl", wrapperType: "someurl", trackId: 214123)
+        let tracks = Track(artistName: "Ezhel", collectionName: "Müptezel", trackName: "AYA", collectionCensoredName: "erhan", artworkUrl100: "someUrl", collectionPrice: 14.99, trackPrice: 14.99, primaryGenreName: "testo", previewUrl: "someurl", wrapperType: "someurl", trackId: 214123,kind: "music", trackViewUrl: "someurl")
         interactor = .init()
         presenter = .init(view: view,tracks: tracks, interactor: interactor)
 
