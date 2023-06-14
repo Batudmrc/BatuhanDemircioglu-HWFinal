@@ -50,6 +50,7 @@ class FavoritesViewController: UIViewController {
 }
 
 extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource, FavoritesViewControllerProtocol {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let isEmpty = presenter.numberOfFavorites() == 0
         UIView.animate(withDuration: 0.8) {

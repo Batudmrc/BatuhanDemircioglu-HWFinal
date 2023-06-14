@@ -220,10 +220,10 @@ extension DetailViewController: DetailViewControllerProtocol {
                     self.setGradient(image: image)
                 }, completion: nil)
             } else {
-                // Handle the case where image data couldn't be converted to UIImage
+                
             }
         } else {
-            // Handle the case where image data is nil
+            
         }
     }
     

@@ -44,11 +44,12 @@ final class DetailViewPresenter {
 }
 
 extension DetailViewPresenter: DetailViewPresenterProtocol {
-     func setupAudioPlayer() {
-         
-            view.hidePlayButtonLoading()
-            view.setupSlider(player?.duration)
+    func setupAudioPlayer() {
+        if let player = player {
+            view?.hidePlayButtonLoading()
+            view?.setupSlider(player.duration)
         }
+    }
     
     func forwardButtonTapped() {
         guard let currentTime = player?.currentTime else { return }
@@ -139,12 +140,14 @@ extension DetailViewPresenter: DetailViewPresenterProtocol {
         
         //MARK: Download Image and Show Fetched Datas
         interactor.downloadImage(for: track) { [weak self] imageData in
+            guard let self = self else {
+                return
+            }
             DispatchQueue.main.async {
-                self?.view.setTrackImage(imageData)
-                self?.view.hideLoading()
+                self.view?.setTrackImage(imageData)
+                self.view?.hideLoading()
             }
         }
-        
         view.setTrackName(track.trackName ?? "")
         view.setArtistName(track.artistName ?? "")
         view.setCollectionName(track.collectionName ?? "")
@@ -154,25 +157,23 @@ extension DetailViewPresenter: DetailViewPresenterProtocol {
         //MARK: Get audio ready to play
         guard let previewUrl = track.previewUrl, let audioURL = URL(string: previewUrl) else { return }
         interactor.loadAudio(from: audioURL) { [weak self] audioData in
+            guard let self = self else {
+                return
+            }
             DispatchQueue.main.async {
-                guard let self = self else { return }
-                // This part crashes sometimes
-                DispatchQueue.main.async { [weak self] in
-                    self?.view.hidePlayButtonLoading()
+                guard let view = self.view else {
+                    return
                 }
-                
+                view.hidePlayButtonLoading()
                 do {
                     self.player = try AVAudioPlayer(data: audioData)
-                    self.setupAudioPlayer() // This line
+                    self.setupAudioPlayer()
                 } catch {
                     print("Failed to create AVAudioPlayer: \(error)")
                 }
             }
         }
     }
-    
-    
-    
     //TODO: add to the coreData
     func addToFavorites(context: NSManagedObjectContext) {
         interactor.addToFavorites(context: context)

@@ -47,6 +47,11 @@
 		3B3DA7F62A3382A7009E6443 /* HomePageCellInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3DA7F52A3382A7009E6443 /* HomePageCellInteractor.swift */; };
 		3B7C853E2A346B1600965CB5 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B7C853D2A346B1600965CB5 /* AudioManager.swift */; };
 		3BE828772A391F4400FD5EEE /* DetailPage+UISetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE828762A391F4400FD5EEE /* DetailPage+UISetup.swift */; };
+		3BED4C022A3A6469004956B8 /* MockDetailPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BED4C012A3A6469004956B8 /* MockDetailPageController.swift */; };
+		3BED4C042A3A647F004956B8 /* MockDetailPageInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BED4C032A3A647F004956B8 /* MockDetailPageInteractor.swift */; };
+		3BED4C062A3A648B004956B8 /* MockDetailPagePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BED4C052A3A648B004956B8 /* MockDetailPagePresenter.swift */; };
+		3BED4C082A3A6495004956B8 /* MockDetailPageRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BED4C072A3A6495004956B8 /* MockDetailPageRouter.swift */; };
+		3BED4C0A2A3A6C97004956B8 /* DetailPagePresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BED4C092A3A6C97004956B8 /* DetailPagePresenterTests.swift */; };
 		3BFD24A62A35D33B003E2045 /* Tracks.json in Resources */ = {isa = PBXBuildFile; fileRef = 3BFD24A52A35D33B003E2045 /* Tracks.json */; };
 		3BFD24A92A35E871003E2045 /* MockHomePageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BFD24A82A35E871003E2045 /* MockHomePageTableViewCell.swift */; };
 		3BFD24AB2A35EB54003E2045 /* MockHomePageTableViewCellInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BFD24AA2A35EB54003E2045 /* MockHomePageTableViewCellInteractor.swift */; };
@@ -116,6 +121,11 @@
 		3B3DA7F52A3382A7009E6443 /* HomePageCellInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageCellInteractor.swift; sourceTree = "<group>"; };
 		3B7C853D2A346B1600965CB5 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		3BE828762A391F4400FD5EEE /* DetailPage+UISetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DetailPage+UISetup.swift"; sourceTree = "<group>"; };
+		3BED4C012A3A6469004956B8 /* MockDetailPageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDetailPageController.swift; sourceTree = "<group>"; };
+		3BED4C032A3A647F004956B8 /* MockDetailPageInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDetailPageInteractor.swift; sourceTree = "<group>"; };
+		3BED4C052A3A648B004956B8 /* MockDetailPagePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDetailPagePresenter.swift; sourceTree = "<group>"; };
+		3BED4C072A3A6495004956B8 /* MockDetailPageRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDetailPageRouter.swift; sourceTree = "<group>"; };
+		3BED4C092A3A6C97004956B8 /* DetailPagePresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPagePresenterTests.swift; sourceTree = "<group>"; };
 		3BFD24A52A35D33B003E2045 /* Tracks.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Tracks.json; sourceTree = "<group>"; };
 		3BFD24A82A35E871003E2045 /* MockHomePageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHomePageTableViewCell.swift; sourceTree = "<group>"; };
 		3BFD24AA2A35EB54003E2045 /* MockHomePageTableViewCellInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHomePageTableViewCellInteractor.swift; sourceTree = "<group>"; };
@@ -185,7 +195,6 @@
 				3B0D3BD02A2E7B870046D441 /* LaunchScreen.storyboard */,
 				3B0D3BD32A2E7B870046D441 /* Info.plist */,
 				3B0D3BCB2A2E7B860046D441 /* SearchTunes.xcdatamodeld */,
-				3B7C853D2A346B1600965CB5 /* AudioManager.swift */,
 			);
 			path = SearchTunes;
 			sourceTree = "<group>";
@@ -296,6 +305,7 @@
 		3B25F20F2A35A8C800553710 /* Mock */ = {
 			isa = PBXGroup;
 			children = (
+				3BED4C002A3A6408004956B8 /* DetailPage */,
 				3BFD24B22A360835003E2045 /* HomeCell */,
 				3B25F2102A35AF9800553710 /* HomePage */,
 				3BFD24A52A35D33B003E2045 /* Tracks.json */,
@@ -317,6 +327,7 @@
 		3B25F21B2A35B2B000553710 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				3BED4BFF2A3A63FB004956B8 /* DetailPage */,
 				3BFD24A72A35E761003E2045 /* TrackCell */,
 				3B25F21C2A35B2BB00553710 /* HomePage */,
 			);
@@ -334,6 +345,7 @@
 		3BE828752A391F3300FD5EEE /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				3B7C853D2A346B1600965CB5 /* AudioManager.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -344,6 +356,25 @@
 				3BE828762A391F4400FD5EEE /* DetailPage+UISetup.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		3BED4BFF2A3A63FB004956B8 /* DetailPage */ = {
+			isa = PBXGroup;
+			children = (
+				3BED4C092A3A6C97004956B8 /* DetailPagePresenterTests.swift */,
+			);
+			path = DetailPage;
+			sourceTree = "<group>";
+		};
+		3BED4C002A3A6408004956B8 /* DetailPage */ = {
+			isa = PBXGroup;
+			children = (
+				3BED4C012A3A6469004956B8 /* MockDetailPageController.swift */,
+				3BED4C032A3A647F004956B8 /* MockDetailPageInteractor.swift */,
+				3BED4C052A3A648B004956B8 /* MockDetailPagePresenter.swift */,
+				3BED4C072A3A6495004956B8 /* MockDetailPageRouter.swift */,
+			);
+			path = DetailPage;
 			sourceTree = "<group>";
 		};
 		3BFD24A72A35E761003E2045 /* TrackCell */ = {
@@ -535,12 +566,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3BED4C082A3A6495004956B8 /* MockDetailPageRouter.swift in Sources */,
 				3BFD24AD2A35EBAC003E2045 /* HomeCellTests.swift in Sources */,
 				3B25F2142A35B08500553710 /* MockHomeViewController.swift in Sources */,
+				3BED4C062A3A648B004956B8 /* MockDetailPagePresenter.swift in Sources */,
 				3BFD24AB2A35EB54003E2045 /* MockHomePageTableViewCellInteractor.swift in Sources */,
 				3BFD24A92A35E871003E2045 /* MockHomePageTableViewCell.swift in Sources */,
+				3BED4C042A3A647F004956B8 /* MockDetailPageInteractor.swift in Sources */,
 				3BFD24B12A35EFCC003E2045 /* MockHomePageTableViewCellPresenter.swift in Sources */,
+				3BED4C022A3A6469004956B8 /* MockDetailPageController.swift in Sources */,
 				3B25F21A2A35B25400553710 /* MockHomePresenter.swift in Sources */,
+				3BED4C0A2A3A6C97004956B8 /* DetailPagePresenterTests.swift in Sources */,
 				3B25F2162A35B19E00553710 /* MockHomeInteractor.swift in Sources */,
 				3B25F2182A35B22700553710 /* MockHomeRouter.swift in Sources */,
 				3B25F21E2A35B2D100553710 /* HomePresenterTests.swift in Sources */,

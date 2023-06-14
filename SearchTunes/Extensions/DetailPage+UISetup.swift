@@ -22,7 +22,6 @@ extension DetailViewController {
             image.averageColor?.cgColor as Any,  // Top color (light gray)
             image.averageColor?.cgColor as Any    // Bottom color (darker gray)
         ]
-    
         gradientLayer.startPoint = CGPoint(x: 0.5, y: 0)
         gradientLayer.endPoint = CGPoint(x: 0.5, y: 1)
         gradientLayer.frame = UIScreen.main.bounds  // Set the frame based on the screen's bounds

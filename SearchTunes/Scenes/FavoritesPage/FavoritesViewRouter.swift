@@ -17,7 +17,8 @@ final class FavoritesViewRouter: FavoritesViewRouterProtocol {
     static func createModule() -> FavoritesViewController {
         let view = FavoritesViewController()
         let router = FavoritesViewRouter()
-        let presenter = FavoritesViewPresenter(view: view, router: router)
+        let interactor = FavoritesViewInteractor()
+        let presenter = FavoritesViewPresenter(view: view, router: router, interactor: interactor)
         view.presenter = presenter
         router.viewController = view
         return view

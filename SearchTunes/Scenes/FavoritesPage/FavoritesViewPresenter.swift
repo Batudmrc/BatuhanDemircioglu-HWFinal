@@ -6,10 +6,8 @@
 //
 
 import Foundation
-import CoreData
 
 protocol FavoritesViewPresenterProtocol: AnyObject {
-    func fetchFavorites()
     func numberOfFavorites() -> Int
     func favorite(at index: Int) -> Item?
     func viewDidLoad()
@@ -19,31 +17,26 @@ final class FavoritesViewPresenter {
     unowned var view: FavoritesViewControllerProtocol!
     let router: FavoritesViewRouterProtocol!
     private var favorites: [Item] = []
-    //private let interactor: FavoritesViewInteractorProtocol
+    private let interactor: FavoritesViewInteractorProtocol!
     
-    init(view: FavoritesViewControllerProtocol!, router: FavoritesViewRouterProtocol!) {
+    init(view: FavoritesViewControllerProtocol!, router: FavoritesViewRouterProtocol!, interactor: FavoritesViewInteractorProtocol!) {
         self.view = view
         self.router = router
+        self.interactor = interactor
     }
 }
 
 extension FavoritesViewPresenter: FavoritesViewPresenterProtocol {
     func viewDidLoad() {
-        fetchFavorites()
-    }
-    func fetchFavorites() {
-        // Fetch favorites from Core Data
-        let context = AppDelegate.customPersistenContainer
-        let fetchRequest: NSFetchRequest<Item> = Item.fetchRequest()
-        
-        do {
-            favorites = try context.fetch(fetchRequest)
-            //view?.reloadData()
-        } catch {
-            print("Failed to fetch favorites: \(error)")
+        interactor.fetchFavorites { [weak self] result in
+            switch result {
+            case .success(let favorites):
+                self?.favorites = favorites
+            case .failure(let error):
+                // Handle the error
+                print("Failed to fetch favorites: \(error)")
+            }
         }
-        
-
     }
     
     func numberOfFavorites() -> Int {
