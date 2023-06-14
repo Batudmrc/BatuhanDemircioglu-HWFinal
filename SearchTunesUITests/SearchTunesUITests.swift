@@ -31,7 +31,7 @@ final class SearchTunesUITests: XCTestCase {
         // Checking if we get 50 cells
         XCTAssertEqual(app.cellCount, 50)
     }
-    
+    //  UIView.animate kullandığım için 140-210 saniye sürüyor hocam 
     func test_PlayAudio() {
         app.launch()
         
@@ -50,7 +50,7 @@ final class SearchTunesUITests: XCTestCase {
         
         XCTAssertNotEqual(app.remainingTimeLabel.label, "00:00")
     }
-    
+    // UIView.animate kullandığım için bu da 70-80 saniye sürüyor hocam
     func test_FavButtonTapped() {
         app.launch()
         // Tap the textfield and type "Tarkan"

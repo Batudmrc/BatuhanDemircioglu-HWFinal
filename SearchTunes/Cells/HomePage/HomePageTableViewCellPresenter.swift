@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import UIKit
 import AVFoundation
 
 protocol HomePageTableViewCellPresenterProtocol {
@@ -59,8 +58,7 @@ extension HomePageTableViewCellPresenter: HomePageTableViewCellPresenterProtocol
             }
         }
     }
-    
-    //TODO: Migrate this to interactor
+
     func load() {
         guard (tracks.artworkUrl100 != nil) else { return }
         guard (tracks.collectionName != nil) else { return }
@@ -73,13 +71,11 @@ extension HomePageTableViewCellPresenter: HomePageTableViewCellPresenterProtocol
         interactor.loadImage(for: tracks) { [weak self] imageData in
             DispatchQueue.main.async {
                 self?.view?.spinner.isHidden = true
-                if let imageData = imageData, let image = UIImage(data: imageData) {
+                if let imageData = imageData {
                     // Animate the image appearing
                     self?.view?.coverImageView.alpha = 0.0
-                    self?.view?.setCoverImage(image)
-                    UIView.animate(withDuration: 0.3) {
-                        self?.view?.coverImageView.alpha = 1.0
-                    }
+                    self?.view?.setCoverImage(imageData)
+                    
                 }
             }
         }
@@ -91,7 +87,7 @@ extension HomePageTableViewCellPresenter: HomePageTableViewCellPresenterProtocol
         } else {
             self.view?.setPrice(nil)
         }
-
+        
     }
 }
 

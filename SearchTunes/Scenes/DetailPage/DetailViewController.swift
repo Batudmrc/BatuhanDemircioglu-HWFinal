@@ -57,11 +57,14 @@ final class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setAccesIdentifiers()
+        setupUI()
+        presenter.viewDidLoad(context: context)
+    }
+    
+    func setupUI() {
         setupSpinner()
         setupGesture()
-        setupImageView()
-        presenter.viewDidLoad(context: context)
-        setGradient()
+        setupImageViews()
     }
     
     func setAccesIdentifiers() {
@@ -73,18 +76,6 @@ final class DetailViewController: UIViewController {
     
     @IBAction func sliderAction(_ sender: Any) {
         presenter.changeSliderAction()
-    }
-    
-    func setGradient() {
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.colors = [
-            UIColor.lightGray.cgColor,  // Top color (light gray)
-            UIColor.darkGray.cgColor    // Bottom color (darker gray)
-        ]
-        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0)
-        gradientLayer.endPoint = CGPoint(x: 0.5, y: 1)
-        gradientLayer.frame = UIScreen.main.bounds  // Set the frame based on the screen's bounds
-        myView.layer.insertSublayer(gradientLayer, at: 0)
     }
 }
 
@@ -162,37 +153,21 @@ extension DetailViewController: DetailViewControllerProtocol {
     }
     
     func hidePlayButtonLoading() {
+        self.playButtonImageView.alpha = 0.0
+        self.playButtonSpinner.alpha = 1.0
         DispatchQueue.main.async { [weak self] in
-            UIView.transition(with: (self?.playButtonImageView)!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+            UIView.animate(withDuration: 0.3, animations: {
+                self?.playButtonSpinner.alpha = 0.0
+                self?.playButtonImageView.alpha = 1.0
+            }) { _ in
                 self?.playButtonSpinner.stopAnimating()
+                self?.playButtonSpinner.alpha = 0.0
                 self?.playButtonImageView.image = UIImage(systemName: "play.circle.fill")
-            }, completion: nil)
+            }
         }
     }
-    
-    func setupGesture() {
-        let tapFavoriteGesture = UITapGestureRecognizer(target: self, action: #selector(favoriteButtonTapped))
-        favoriteButtonImageView.isUserInteractionEnabled = true
-        favoriteButtonImageView.addGestureRecognizer(tapFavoriteGesture)
-        
-        let tapPlayGesture = UITapGestureRecognizer(target: self, action: #selector(playButtonTapped))
-        playButtonImageView.isUserInteractionEnabled = true
-        playButtonImageView.addGestureRecognizer(tapPlayGesture)
-        
-        let tapForwardGesture = UITapGestureRecognizer(target: self, action: #selector(forwardButtonTapped))
-        forwardButton.isUserInteractionEnabled = true
-        forwardButton.addGestureRecognizer(tapForwardGesture)
-        
-        let tapBackGesture = UITapGestureRecognizer(target: self, action: #selector(backButtonTapped))
-        backButton.isUserInteractionEnabled = true
-        backButton.addGestureRecognizer(tapBackGesture)
-        
-        let tapShareGesture = UITapGestureRecognizer(target: self, action: #selector(shareButtonTapped))
-        shareButtonImageView.isUserInteractionEnabled = true
-        shareButtonImageView.addGestureRecognizer(tapShareGesture)
-    }
+
     //MARK: Gesture functions
-    
     @objc func shareButtonTapped() {
         guard let url = URL(string: (track?.trackViewUrl)!) else { return }
         let activityViewController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
@@ -200,7 +175,6 @@ extension DetailViewController: DetailViewControllerProtocol {
             activityViewController.popoverPresentationController?.sourceView = self.view
         }
         present(activityViewController, animated: true, completion: nil)
-        
     }
     
     @objc func playButtonTapped() {
@@ -236,7 +210,6 @@ extension DetailViewController: DetailViewControllerProtocol {
                 self.favoriteButtonImageView.transform = .identity
             }, completion: nil)
         }
-        
     }
     
     func setTrackImage(_ imageData: Data?) {
@@ -244,6 +217,7 @@ extension DetailViewController: DetailViewControllerProtocol {
             if let image = UIImage(data: imageData) {
                 UIView.transition(with: coverImageView, duration: 0.3, options: .transitionCrossDissolve, animations: {
                     self.coverImageView.image = image
+                    self.setGradient(image: image)
                 }, completion: nil)
             } else {
                 // Handle the case where image data couldn't be converted to UIImage
@@ -281,30 +255,7 @@ extension DetailViewController: DetailViewControllerProtocol {
     func setCollectionName(_ tex: String) {
         
     }
-    
-    func setupImageView() {
-        coverImageView.layer.cornerRadius = 8.0
-        coverImageView.layer.masksToBounds = true
-        coverImageView.contentMode = .scaleAspectFit
-        // Apply shadow to the coverImageView layer
-        coverImageView.layer.shadowColor = UIColor.clear.cgColor
-        coverImageView.layer.shadowOffset = CGSize(width: 0, height: 2)
-        coverImageView.layer.shadowOpacity = 1
-        coverImageView.layer.shadowRadius = 4.0
-        coverImageView.layer.shadowPath = UIBezierPath(roundedRect: coverImageView.bounds, cornerRadius: coverImageView.layer.cornerRadius).cgPath
-    }
-    
-    func setupSpinner() {
-        spinner.translatesAutoresizingMaskIntoConstraints = false
-        coverImageView.addSubview(spinner)
-        spinner.centerXAnchor.constraint(equalTo: coverImageView.centerXAnchor).isActive = true
-        spinner.centerYAnchor.constraint(equalTo: coverImageView.centerYAnchor).isActive = true
-        
-        playButtonSpinner.translatesAutoresizingMaskIntoConstraints = false
-        playButtonImageView.addSubview(playButtonSpinner)
-        playButtonSpinner.centerXAnchor.constraint(equalTo: playButtonImageView.centerXAnchor).isActive = true
-        playButtonSpinner.centerYAnchor.constraint(equalTo: playButtonImageView.centerYAnchor).isActive = true
-        spinner.color = .white
-        playButtonSpinner.color = .white
-    }
 }
+
+
+

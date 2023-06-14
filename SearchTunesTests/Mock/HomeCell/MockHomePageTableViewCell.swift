@@ -24,9 +24,10 @@ class MockHomePageTableViewCell: HomePageTableViewCellProtocol {
     
     var setCoverImageCalled = false
     var setCoverImageParameters: (image: UIImage, Void)?
-    func setCoverImage(_ image: UIImage) {
+    func setCoverImage(_ image: Data) {
         setCoverImageCalled = true
-        setCoverImageParameters = (image, ())
+        let photo = UIImage(data: image)
+        setCoverImageParameters = (photo!, ())
     }
     
     func setPlayerImage(_ image: UIImage) {

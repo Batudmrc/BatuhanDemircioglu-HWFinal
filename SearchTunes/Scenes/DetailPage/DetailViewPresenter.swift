@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import CoreData // importing this for context NSManagedObjectContext
+import CoreData // importing this for context NSManagedObjectContext only
 import AVFoundation
 
 protocol DetailViewPresenterProtocol {
@@ -23,11 +23,12 @@ protocol DetailViewPresenterProtocol {
     func getTrack() -> Track?
     func forwardButtonTapped()
     func backButtonTapped()
+    func setupAudioPlayer()
 }
 
 final class DetailViewPresenter {
     
-    unowned var view: DetailViewControllerProtocol!
+    weak var view: DetailViewControllerProtocol!
     let router: DetailViewRouterProtocol!
     private let interactor: DetailViewInteractorProtocol
     private var isFavorite = false
@@ -43,13 +44,19 @@ final class DetailViewPresenter {
 }
 
 extension DetailViewPresenter: DetailViewPresenterProtocol {
-
+     func setupAudioPlayer() {
+         
+            view.hidePlayButtonLoading()
+            view.setupSlider(player?.duration)
+        }
+    
     func forwardButtonTapped() {
         guard let currentTime = player?.currentTime else { return }
         let newTime = currentTime + 5.0
         player?.currentTime = newTime
         view.updateSlider(newTime)
     }
+    
     func backButtonTapped() {
         guard let currentTime = player?.currentTime else { return }
         let newTime = max(currentTime - 5.0, 0.0)
@@ -119,27 +126,15 @@ extension DetailViewPresenter: DetailViewPresenterProtocol {
         isFavorite = isFavoriteTrack
         
         view.updateLikedButton()
-        
+        // Create a timer that updates slider every 0.1 seconds
         timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(updateSlider), userInfo: nil, repeats: true)
-        //MARK: Fetch and Check if selected track is favorite
         view.showLoading()
-        guard let track = view.getTrack(),
-              let trackId = track.trackId else { return }
-        // migrate this to interactor
-        interactor.fetchFavoriteTracks(context: context, for: track) { matchingItems in
-            //let isFavorite = !matchingItems.isEmpty
-            self.view.updateLikedButton()
-        }
-        let fetchRequest: NSFetchRequest<Item> = Item.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "trackId == %@", String(trackId))
-        
-        do {
-            let matchingItems = try context.fetch(fetchRequest)
-            isFavorite = !matchingItems.isEmpty
-            
-            view.updateLikedButton()
-        } catch {
-            print("Failed to fetch favorite tracks: \(error)")
+        //MARK: Fetch and Check if selected track is favorite
+        interactor.fetchFavoriteTracks(context: context, for: track) { [weak self] matchingItems in
+            DispatchQueue.main.async {
+                let isFavorite = !matchingItems.isEmpty
+                self?.changeFavoriteStatus(status: isFavorite) // Update the isFavorite flag
+            }
         }
         
         //MARK: Download Image and Show Fetched Datas
@@ -153,8 +148,6 @@ extension DetailViewPresenter: DetailViewPresenterProtocol {
         view.setTrackName(track.trackName ?? "")
         view.setArtistName(track.artistName ?? "")
         view.setCollectionName(track.collectionName ?? "")
-        // Safely Unwrap this
-        //view.setPrice("Buy for : $\(String(track.trackPrice!))" )
         
         view.showPlayButtonLoading()
         
@@ -164,17 +157,22 @@ extension DetailViewPresenter: DetailViewPresenterProtocol {
             DispatchQueue.main.async {
                 guard let self = self else { return }
                 // This part crashes sometimes
-                self.view.hidePlayButtonLoading()
+                DispatchQueue.main.async { [weak self] in
+                    self?.view.hidePlayButtonLoading()
+                }
                 
                 do {
                     self.player = try AVAudioPlayer(data: audioData)
-                    self.view.setupSlider(self.player?.duration)
+                    self.setupAudioPlayer() // This line
                 } catch {
                     print("Failed to create AVAudioPlayer: \(error)")
                 }
             }
         }
     }
+    
+    
+    
     //TODO: add to the coreData
     func addToFavorites(context: NSManagedObjectContext) {
         interactor.addToFavorites(context: context)

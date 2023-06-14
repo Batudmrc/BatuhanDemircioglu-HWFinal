@@ -34,10 +34,10 @@ final class SplashPresenter: SplashPresenterProtocol {
 
 extension SplashPresenter: SplashInteractorOutputProtocol {
     func showNoConnectionAlert() {
-            DispatchQueue.main.async { [weak self] in
-                self?.view.showNoConnectionAlert()
-            }
+        DispatchQueue.main.async { [weak self] in
+            self?.view.showNoConnectionAlert()
         }
+    }
     
     func connectionStatus(status: Bool) {
         if status {

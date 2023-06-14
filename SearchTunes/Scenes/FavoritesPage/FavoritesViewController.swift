@@ -15,14 +15,15 @@ class FavoritesViewController: UIViewController {
     
     @IBOutlet var myView: UIView!
     @IBOutlet weak var tableView: UITableView!
-    
+    let messageLabel = UILabel()
+    private var emptyView: UIView!
     var presenter: FavoritesViewPresenterProtocol!
     var interactor: HomePageTableViewCellInteractorProtocol = HomePageTableViewCellInteractor()
     override func viewDidLoad() {
         super.viewDidLoad()
         setGradient()
         setupTableView()
-        //presenter.fetchFavorites()
+        setupEmptyView()
         presenter.viewDidLoad()
     }
     
@@ -50,8 +51,12 @@ class FavoritesViewController: UIViewController {
 
 extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource, FavoritesViewControllerProtocol {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return presenter.numberOfFavorites()
-    }
+        let isEmpty = presenter.numberOfFavorites() == 0
+        UIView.animate(withDuration: 0.8) {
+            self.messageLabel.alpha = isEmpty ? 1.0 : 0.0
+        }
+        return isEmpty ? 0 : presenter.numberOfFavorites()
+        }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: HomePageTableViewCell.identifier, for: indexPath) as! HomePageTableViewCell
@@ -68,14 +73,12 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource, F
             cell.playButtonSpinner.isHidden = true
             // Load the cover image asynchronously
             if let imageData = favorite.coverImage {
-                let image = UIImage(data: imageData)
-                cell.setCoverImage(image!)
+                cell.setCoverImage(imageData)
             }
         }
         return cell
     }
 
-    
     @objc private func playerImageViewTapped(sender: UITapGestureRecognizer) {
         guard let tappedView = sender.view as? UIImageView,
               let tappedCell = tappedView.superview?.superview as? HomePageTableViewCell,
@@ -93,4 +96,14 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource, F
         }
     }
     
+    func setupEmptyView() {
+        messageLabel.textAlignment = .center
+        messageLabel.textColor = .white
+        messageLabel.font = UIFont.systemFont(ofSize: 20)
+        messageLabel.text = "No favorite Track to display"
+        tableView.addSubview(messageLabel)
+        messageLabel.translatesAutoresizingMaskIntoConstraints = false
+        messageLabel.centerXAnchor.constraint(equalTo: tableView.centerXAnchor).isActive = true
+        messageLabel.centerYAnchor.constraint(equalTo: tableView.centerYAnchor).isActive = true
+    }
 }

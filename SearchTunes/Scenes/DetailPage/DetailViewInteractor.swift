@@ -18,7 +18,7 @@ protocol DetailViewInteractorProtocol {
 }
 
 protocol DetailViewInteractorOutput {
-    
+    func favoriteTracksOutput(result: [Item])
 }
 
 final class DetailViewInteractor {
@@ -32,22 +32,22 @@ final class DetailViewInteractor {
 extension DetailViewInteractor: DetailViewInteractorProtocol {
     
     func fetchFavoriteTracks(context: NSManagedObjectContext, for track: Track, completion: @escaping ([Item]) -> Void) {
-            DispatchQueue.global().async { [weak self] in
-                guard self != nil else { return }
-                
-                let fetchRequest: NSFetchRequest<Item> = Item.fetchRequest()
-                fetchRequest.predicate = NSPredicate(format: "trackId == %@", String(track.trackId!))
-                
-                do {
-                    let matchingItems = try context.fetch(fetchRequest)
-                    completion(matchingItems)
-                } catch {
-                    print("Failed to fetch favorite tracks: \(error)")
-                    completion([])
-                }
+        DispatchQueue.global().async { [weak self] in
+            guard let self = self else { return }
+            
+            let fetchRequest: NSFetchRequest<Item> = Item.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "trackId == %@", String(track.trackId!))
+            
+            do {
+                let matchingItems = try context.fetch(fetchRequest)
+                completion(matchingItems)
+                self.output?.favoriteTracksOutput(result: matchingItems) // Notify the presenter with the fetched favorite tracks
+            } catch {
+                print("Failed to fetch favorite tracks: \(error)")
+                completion([])
             }
         }
-    
+    }
     
     func loadAudio(from url: URL, completion: @escaping (Data) -> Void) {
         DispatchQueue.global().async {
@@ -94,19 +94,7 @@ extension DetailViewInteractor: DetailViewInteractorProtocol {
                 print("Failed to save search history: \(error)")
             }
         })
-        
-        
         favoriteTracks = favoriteTracks.filter { $0.trackId != String(trackId) }
-        
-         let request: NSFetchRequest<Item> = Item.fetchRequest()
-         do {
-         favoriteTracks = try context.fetch(request)
-         for i in favoriteTracks {
-         print(i.coverImage as Any)
-         }
-         } catch {
-         print(error)
-         }
     }
     
     func discardFavorite(context: NSManagedObjectContext) {
@@ -131,17 +119,5 @@ extension DetailViewInteractor: DetailViewInteractorProtocol {
         }
         // Update the isFavorite flag
         presenter?.changeFavoriteStatus(status: false)
-        /*
-         let request: NSFetchRequest<Item> = Item.fetchRequest()
-         do {
-         favoriteTracks = try context.fetch(request)
-         for i in favoriteTracks {
-         print(i.trackName as Any)
-         }
-         } catch {
-         print(error)
-         }
-         */
-        
     }
 }

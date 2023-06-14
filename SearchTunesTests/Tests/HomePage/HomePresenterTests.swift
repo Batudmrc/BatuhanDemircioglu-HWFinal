@@ -46,7 +46,6 @@ class HomePresenterTests: XCTestCase {
         presenter.searchBarTextDidChange(searchText)
         
         // Then
-        XCTAssertTrue(mockView.showLoadingCalled, "showLoading should be called")
         XCTAssertTrue(mockView.setupTableViewCalled, "setupTableView should be called")
         XCTAssertTrue(mockView.setupEmptyViewCalled, "setupEmptyView should be called")
         

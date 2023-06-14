@@ -9,7 +9,7 @@ import UIKit
 import AVFoundation
 
 protocol HomePageTableViewCellProtocol: AnyObject {
-    func setCoverImage(_ image: UIImage)
+    func setCoverImage(_ imageData: Data)
     func setPlayerImage(_ image:UIImage)
     func setCollectionName(_ text: String)
     func setArtistName(_ text: String)
@@ -52,19 +52,22 @@ class HomePageTableViewCell: UITableViewCell {
             self.transform = CGAffineTransform.identity
         }
         
+        self.layer.cornerRadius = 14.0
+        self.layer.masksToBounds = true
+        
+        // Add white border to the cell
+        self.layer.borderWidth = 1.0
+        self.layer.borderColor = UIColor.lightGray.cgColor
         setupGesture()
         coverImageView.layer.cornerRadius = 8.0
-            coverImageView.layer.masksToBounds = true
+        coverImageView.layer.masksToBounds = true
         
         coverImageView.layer.borderWidth = 1.0
-            coverImageView.layer.borderColor = UIColor.white.cgColor
+        coverImageView.layer.borderColor = UIColor.white.cgColor
     }
     @objc private func playerImageViewTapped() {
-        
         cellPresenter.playButtonTapped()
-        
     }
-    
     
     func setupGesture() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(playerImageViewTapped))
@@ -75,7 +78,7 @@ class HomePageTableViewCell: UITableViewCell {
 }
 
 extension HomePageTableViewCell: HomePageTableViewCellProtocol {
-
+    
     func updatePlayButtonImage(_ imageName: String) {
         let scaleTransform = CGAffineTransform(scaleX: 0.9, y: 0.9)
         
@@ -93,12 +96,11 @@ extension HomePageTableViewCell: HomePageTableViewCellProtocol {
         priceLabel.setTitle(text, for: .normal)
     }
     
-    
     override func prepareForReuse() {
         super.prepareForReuse()
         audioPlayer?.stop()
     }
-
+    
     
     func showPlayButtonLoading() {
         spinner.backgroundColor = .white
@@ -116,9 +118,13 @@ extension HomePageTableViewCell: HomePageTableViewCellProtocol {
         collectionName.text = text
     }
     
-    func setCoverImage(_ image: UIImage) {
+    func setCoverImage(_ imageData: Data) {
         DispatchQueue.main.async {
+            let image = UIImage(data: imageData)
             self.coverImageView.image = image
+            UIView.animate(withDuration: 0.3) {
+                self.coverImageView.alpha = 1.0
+            }
         }
     }
     
@@ -133,7 +139,5 @@ extension HomePageTableViewCell: HomePageTableViewCellProtocol {
     func setTrackName(_ text: String) {
         trackName.text = text
     }
-    
-    
 }
 

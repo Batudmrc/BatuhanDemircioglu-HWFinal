@@ -44,7 +44,6 @@ extension HomePresenter: HomePresenterProtocol {
     }
     
     func searchBarTextDidChange(_ searchText: String) {
-        view?.showLoading()
         view?.setupTableView()
         view?.setupEmptyView()
         // Using debounceTimer to not send request too frequently
@@ -63,7 +62,6 @@ extension HomePresenter: HomePresenterProtocol {
     
     func load() {
         
-        //interactor.fetchTracks(with: "ezhel")
     }
     // SafeIndex koy
     func track(_ index: Int) -> Track? {
@@ -78,12 +76,11 @@ extension HomePresenter: HomePresenterProtocol {
 extension HomePresenter: HomeInteractorOutput {
     
     func handleTrackResult(_ result: Result<SearchResult, Error>) {
-        view?.hideLoading()
         switch result {
         case .success(let tracks):
             let filteredResults = tracks.results!.filter { track in
-                    return track.kind == "song"
-                }
+                return track.kind == "song"
+            }
             self.tracks = filteredResults
             view?.reloadData()
         case .failure(let failure):

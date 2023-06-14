@@ -33,8 +33,6 @@ public struct Track: Codable {
     public let previewUrl: String?
     public let wrapperType: String?
     public let trackViewUrl: String?
-    
-    
 
     enum CodingKeys: String, CodingKey {
         case artistName, collectionName, trackName, collectionCensoredName, artworkUrl100, collectionPrice, trackPrice, primaryGenreName, previewUrl, wrapperType, trackId, kind, trackViewUrl

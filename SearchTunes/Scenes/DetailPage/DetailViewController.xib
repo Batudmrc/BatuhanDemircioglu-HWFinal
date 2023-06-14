@@ -96,7 +96,7 @@
                         <constraint firstAttribute="height" constant="32" id="l2q-Q4-vD3"/>
                     </constraints>
                 </imageView>
-                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="4om-Ym-4Mk">
+                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="30" translatesAutoresizingMaskIntoConstraints="NO" id="4om-Ym-4Mk">
                     <rect key="frame" x="22" y="473" width="331" height="31"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="oqP-6s-xWA"/>

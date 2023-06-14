@@ -7,12 +7,9 @@
 
 import UIKit
 import NetworkPackage
-import AVFoundation
 
 protocol HomeViewControllerProtocol: AnyObject {
     func setupTableView()
-    func showLoading()
-    func hideLoading()
     func reloadData()
     func setupEmptyView()
 }
@@ -25,7 +22,6 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     private let service: NetworkManagerProtocol = NetworkManager()
     
-    let spinner = UIActivityIndicatorView(style: .large)
     var presenter: HomePresenterProtocol!
     let interactor: HomePageTableViewCellInteractorProtocol = HomePageTableViewCellInteractor()
     let messageLabel = UILabel()
@@ -33,8 +29,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setAccesIdentifiers()
-        setupSearchBar()
-        setGradient()
+        setupUI()
     }
     
     func setAccesIdentifiers() {
@@ -52,7 +47,11 @@ class HomeViewController: UIViewController {
         gradientLayer.endPoint = CGPoint(x: 0.5, y: 0.2)
         gradientLayer.frame = UIScreen.main.bounds  // Set the frame based on the screen's bounds
         topView.layer.insertSublayer(gradientLayer, at: 0)
-        
+    }
+    
+    func setupUI() {
+        setupSearchBar()
+        setGradient()
     }
     
     @IBAction func favoriteButtonTapped(_ sender: Any) {
@@ -114,14 +113,6 @@ extension HomeViewController: HomeViewControllerProtocol, UISearchBarDelegate {
         tableView.delegate = self
         tableView.register(UINib(nibName: HomePageTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: HomePageTableViewCell.identifier)
         tableView.showsVerticalScrollIndicator = false
-    }
-    
-    func showLoading() {
-        
-    }
-    
-    func hideLoading() {
-        
     }
     
     func setupSearchBar() {

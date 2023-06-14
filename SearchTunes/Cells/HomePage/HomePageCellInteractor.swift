@@ -35,7 +35,6 @@ extension HomePageTableViewCellInteractor: HomePageTableViewCellInteractorProtoc
             completion(nil)
             return
         }
-        
         let modifiedURLString = artworkUrl.replacingOccurrences(of: "/100x100bb.jpg", with: "/640x640bb.jpg")
         let imageURL = URL(string: modifiedURLString)
         

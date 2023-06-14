@@ -20,7 +20,6 @@
 		3B0D3BCD2A2E7B860046D441 /* SearchTunes.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3B0D3BCB2A2E7B860046D441 /* SearchTunes.xcdatamodeld */; };
 		3B0D3BCF2A2E7B870046D441 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3B0D3BCE2A2E7B870046D441 /* Assets.xcassets */; };
 		3B0D3BD22A2E7B870046D441 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B0D3BD02A2E7B870046D441 /* LaunchScreen.storyboard */; };
-		3B0D3BDD2A2E7B870046D441 /* SearchTunesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0D3BDC2A2E7B870046D441 /* SearchTunesTests.swift */; };
 		3B0D3BE72A2E7B870046D441 /* SearchTunesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0D3BE62A2E7B870046D441 /* SearchTunesUITests.swift */; };
 		3B0D3BE92A2E7B870046D441 /* SearchTunesUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0D3BE82A2E7B870046D441 /* SearchTunesUITestsLaunchTests.swift */; };
 		3B0D3BF72A2E86B00046D441 /* HomeEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0D3BF62A2E86B00046D441 /* HomeEntity.swift */; };
@@ -47,6 +46,7 @@
 		3B25F21E2A35B2D100553710 /* HomePresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B25F21D2A35B2D100553710 /* HomePresenterTests.swift */; };
 		3B3DA7F62A3382A7009E6443 /* HomePageCellInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3DA7F52A3382A7009E6443 /* HomePageCellInteractor.swift */; };
 		3B7C853E2A346B1600965CB5 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B7C853D2A346B1600965CB5 /* AudioManager.swift */; };
+		3BE828772A391F4400FD5EEE /* DetailPage+UISetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE828762A391F4400FD5EEE /* DetailPage+UISetup.swift */; };
 		3BFD24A62A35D33B003E2045 /* Tracks.json in Resources */ = {isa = PBXBuildFile; fileRef = 3BFD24A52A35D33B003E2045 /* Tracks.json */; };
 		3BFD24A92A35E871003E2045 /* MockHomePageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BFD24A82A35E871003E2045 /* MockHomePageTableViewCell.swift */; };
 		3BFD24AB2A35EB54003E2045 /* MockHomePageTableViewCellInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BFD24AA2A35EB54003E2045 /* MockHomePageTableViewCellInteractor.swift */; };
@@ -88,7 +88,6 @@
 		3B0D3BD12A2E7B870046D441 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3B0D3BD32A2E7B870046D441 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3B0D3BD82A2E7B870046D441 /* SearchTunesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SearchTunesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		3B0D3BDC2A2E7B870046D441 /* SearchTunesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTunesTests.swift; sourceTree = "<group>"; };
 		3B0D3BE22A2E7B870046D441 /* SearchTunesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SearchTunesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B0D3BE62A2E7B870046D441 /* SearchTunesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTunesUITests.swift; sourceTree = "<group>"; };
 		3B0D3BE82A2E7B870046D441 /* SearchTunesUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTunesUITestsLaunchTests.swift; sourceTree = "<group>"; };
@@ -116,6 +115,7 @@
 		3B25F21D2A35B2D100553710 /* HomePresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePresenterTests.swift; sourceTree = "<group>"; };
 		3B3DA7F52A3382A7009E6443 /* HomePageCellInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageCellInteractor.swift; sourceTree = "<group>"; };
 		3B7C853D2A346B1600965CB5 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
+		3BE828762A391F4400FD5EEE /* DetailPage+UISetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DetailPage+UISetup.swift"; sourceTree = "<group>"; };
 		3BFD24A52A35D33B003E2045 /* Tracks.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Tracks.json; sourceTree = "<group>"; };
 		3BFD24A82A35E871003E2045 /* MockHomePageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHomePageTableViewCell.swift; sourceTree = "<group>"; };
 		3BFD24AA2A35EB54003E2045 /* MockHomePageTableViewCellInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHomePageTableViewCellInteractor.swift; sourceTree = "<group>"; };
@@ -174,6 +174,8 @@
 		3B0D3BC12A2E7B860046D441 /* SearchTunes */ = {
 			isa = PBXGroup;
 			children = (
+				3BE828782A391F6600FD5EEE /* Extensions */,
+				3BE828752A391F3300FD5EEE /* Utils */,
 				3B0D3BFC2A2E9D110046D441 /* Scenes */,
 				3B0D3BFB2A2E9D080046D441 /* Cells */,
 				3B0D3BC22A2E7B860046D441 /* AppDelegate.swift */,
@@ -193,7 +195,6 @@
 			children = (
 				3B25F21B2A35B2B000553710 /* Tests */,
 				3B25F20F2A35A8C800553710 /* Mock */,
-				3B0D3BDC2A2E7B870046D441 /* SearchTunesTests.swift */,
 			);
 			path = SearchTunesTests;
 			sourceTree = "<group>";
@@ -328,6 +329,21 @@
 				3B25F21D2A35B2D100553710 /* HomePresenterTests.swift */,
 			);
 			path = HomePage;
+			sourceTree = "<group>";
+		};
+		3BE828752A391F3300FD5EEE /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		3BE828782A391F6600FD5EEE /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				3BE828762A391F4400FD5EEE /* DetailPage+UISetup.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		3BFD24A72A35E761003E2045 /* TrackCell */ = {
@@ -492,6 +508,7 @@
 				3B024C552A30CEE4009BF16E /* FavoritesViewPresenter.swift in Sources */,
 				3B0D3C122A2F78AF0046D441 /* SplashRouter.swift in Sources */,
 				3B0D3BC72A2E7B860046D441 /* HomeViewController.swift in Sources */,
+				3BE828772A391F4400FD5EEE /* DetailPage+UISetup.swift in Sources */,
 				3B0D3C1A2A2FDAD90046D441 /* DetailViewInteractor.swift in Sources */,
 				3B0D3C002A2E9D310046D441 /* HomePageTableViewCell.swift in Sources */,
 				3B0D3C072A2F33340046D441 /* HomeInteractor.swift in Sources */,
@@ -518,7 +535,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3B0D3BDD2A2E7B870046D441 /* SearchTunesTests.swift in Sources */,
 				3BFD24AD2A35EBAC003E2045 /* HomeCellTests.swift in Sources */,
 				3B25F2142A35B08500553710 /* MockHomeViewController.swift in Sources */,
 				3BFD24AB2A35EB54003E2045 /* MockHomePageTableViewCellInteractor.swift in Sources */,

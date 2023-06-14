@@ -19,6 +19,7 @@ final class FavoritesViewPresenter {
     unowned var view: FavoritesViewControllerProtocol!
     let router: FavoritesViewRouterProtocol!
     private var favorites: [Item] = []
+    //private let interactor: FavoritesViewInteractorProtocol
     
     init(view: FavoritesViewControllerProtocol!, router: FavoritesViewRouterProtocol!) {
         self.view = view
@@ -41,6 +42,8 @@ extension FavoritesViewPresenter: FavoritesViewPresenterProtocol {
         } catch {
             print("Failed to fetch favorites: \(error)")
         }
+        
+
     }
     
     func numberOfFavorites() -> Int {
