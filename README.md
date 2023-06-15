@@ -23,6 +23,8 @@ SearchTunes is a user-friendly music search application that allows you to disco
 
 - **Detail Page :** Click to the desired track to see the details. You can share, add to favorite and change the duration of the track in the Detail Page.
 
+- **Adaptive Background:** Background color adapts the cover image of selected track in the Detail Page.
+
 - **Sharing :** Share your favorite tracks with the button inside the Detail Page.
 
 - **Error Handling :** SearchTunes includes robust error handling to enhance user experience and provide helpful feedback.
@@ -36,4 +38,18 @@ SearchTunes is a user-friendly music search application that allows you to disco
 - **Well Organized Folder Structure :** SearchTunes follows a concise and logical organization of files and folders. This structure promotes code readability, modularity, and maintainability.
 
 - **No Third Party Packages Used :** SearchTunes does not use any third-party packages, relying solely on native iOS frameworks for its functionality. This approach ensures a streamlined and self-contained application.
+
+## Screen Records
+
+
+
+**Full Review**
+
+https://github.com/Batudmrc/BatuhanDemircioglu-HWFinal/assets/87566024/0faac237-cb0d-4280-8678-0988ea2b3737
+
+**Connection Check**
+
+https://github.com/Batudmrc/BatuhanDemircioglu-HWFinal/assets/87566024/0f34e273-da26-4b48-bb22-9ef4fe8214f5
+
+
 
