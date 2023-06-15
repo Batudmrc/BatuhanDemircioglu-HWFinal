@@ -58,7 +58,7 @@ extension HomePageTableViewCellPresenter: HomePageTableViewCellPresenterProtocol
             }
         }
     }
-
+    
     func load() {
         guard (tracks.artworkUrl100 != nil) else { return }
         guard (tracks.collectionName != nil) else { return }

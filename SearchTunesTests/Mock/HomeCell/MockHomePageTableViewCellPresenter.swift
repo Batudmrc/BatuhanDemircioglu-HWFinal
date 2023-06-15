@@ -10,14 +10,19 @@ import Foundation
 
 
 final class MockHomePageTableViewCellPresenter: HomePageTableViewCellPresenterProtocol {
-    
+    var loadCalled = false
+    var playButtonTappedCalled = false
+    var setCoverImageCalled = false
+
     
     func load() {
+        setCoverImageCalled = true
+        loadCalled = true
         
     }
     
     func playButtonTapped() {
-        
+        playButtonTappedCalled = true
     }
     
     

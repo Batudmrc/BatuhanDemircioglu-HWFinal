@@ -9,7 +9,9 @@ import UIKit
 import AVFoundation
 
 protocol FavoritesViewControllerProtocol: AnyObject {
-    
+    func setupTableView()
+    func setupEmptyView()
+    func setGradient()
 }
 class FavoritesViewController: UIViewController {
     

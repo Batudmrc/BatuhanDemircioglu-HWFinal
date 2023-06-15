@@ -22,7 +22,6 @@ class HomePageTableViewCellTests: XCTestCase {
         let tracks = Track(artistName: "Ezhel", collectionName: "Müptezel", trackName: "AYA", collectionCensoredName: "erhan", artworkUrl100: "someUrl", collectionPrice: 14.99, trackPrice: 14.99, primaryGenreName: "testo", previewUrl: "someurl", wrapperType: "someurl", trackId: 214123,kind: "music", trackViewUrl: "someurl")
         interactor = .init()
         presenter = .init(view: view,tracks: tracks, interactor: interactor)
-
     }
     
     override func tearDown() {
@@ -34,18 +33,34 @@ class HomePageTableViewCellTests: XCTestCase {
     // Test if Image is loaded
     func test_ImageLoaded() {
         XCTAssertFalse(interactor.loadImageCalled)
-    
+        XCTAssertFalse(interactor.setCoverImageCalled)
+        
         presenter.load()
         
+        XCTAssertTrue(interactor.setCoverImageCalled)
         XCTAssertTrue(interactor.loadImageCalled)
     }
     // Test if Audio is loaded
     func test_AudioLoaded() {
-        
         XCTAssertFalse(interactor.loadAudioCalled)
+        XCTAssertFalse(interactor.updatePlayButtonImage)
         
         presenter.playButtonTapped()
         
         XCTAssertTrue(interactor.loadAudioCalled)
+        XCTAssertTrue(interactor.updatePlayButtonImage)
+    }
+    
+    func test_SetLabels() {
+        XCTAssertFalse(view.setTrackNameCalled)
+        XCTAssertFalse(view.setPriceCalled)
+        XCTAssertFalse(view.setArtistNameCalled)
+        view.setArtistName("Test")
+        view.setTrackName("Test")
+        view.setPrice("Test")
+        XCTAssertTrue(view.setArtistNameCalled)
+        XCTAssertTrue(view.setPriceCalled)
+        XCTAssertTrue(view.setArtistNameCalled)
+        
     }
 }

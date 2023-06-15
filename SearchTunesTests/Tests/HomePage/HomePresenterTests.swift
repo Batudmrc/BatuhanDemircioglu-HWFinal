@@ -35,35 +35,32 @@ class HomePresenterTests: XCTestCase {
     
     func testSearchBarTextDidChange() {
         // Given
-        let searchText = "test"
+        let searchText = "Ezhel"
         
         // Functions below are not called before user made a change in the textfield
         XCTAssertFalse(mockView.showLoadingCalled, "showLoading should be called")
         XCTAssertFalse(mockView.setupTableViewCalled, "setupTableView should be called")
         XCTAssertFalse(mockView.setupEmptyViewCalled, "setupEmptyView should be called")
-        
+        XCTAssertFalse(mockInteractor.fetchTracksCalled)
         // When
         presenter.searchBarTextDidChange(searchText)
-        
         // Then
         XCTAssertTrue(mockView.setupTableViewCalled, "setupTableView should be called")
         XCTAssertTrue(mockView.setupEmptyViewCalled, "setupEmptyView should be called")
         
-        
-        XCTAssertFalse(mockInteractor.fetchTracksCalled, "fetchTracks should be called")
-        XCTAssertNotEqual(mockInteractor.fetchTracksSearchText, searchText, "fetchTracks should be called with correct searchText")
+        XCTAssertFalse(mockInteractor.fetchTracksCalled)
+        XCTAssertNotEqual(mockInteractor.fetchTracksSearchText, searchText)
         
         mockInteractor.fetchTracks(with: searchText)
         
-        XCTAssertTrue(mockInteractor.fetchTracksCalled, "fetchTracks should be called")
-        XCTAssertEqual(mockInteractor.fetchTracksSearchText, searchText, "fetchTracks should be called with correct searchText")
+        XCTAssertTrue(mockInteractor.fetchTracksCalled)
+        XCTAssertEqual(mockInteractor.fetchTracksSearchText, searchText)
     }
     
-    func testExample() {
-        
-        mockInteractor.fetchTracks(with: "Ezhel")
-        XCTAssertTrue(mockInteractor.fetchTracksCalled)
-        
+    func testNavigationToFavorites() {
+        XCTAssertFalse(mockRouter.navigateToDetailCalled)
+        presenter.favoriteButtonTapped()
+        XCTAssertTrue(mockRouter.navigateToDetailCalled)
     }
     
     func testFetchTracksOutput() {

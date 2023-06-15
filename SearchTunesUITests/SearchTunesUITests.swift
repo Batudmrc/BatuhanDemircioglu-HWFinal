@@ -15,7 +15,9 @@ final class SearchTunesUITests: XCTestCase {
         super.setUp()
         continueAfterFailure = false
         app = XCUIApplication()
-        app.launchArguments.append("----UI TEST----")
+        //app.launchArguments.append("----UI TEST----")
+        app.launchArguments = ["ResetDefaults", "NoAnimations", "UserHasRegistered"]
+        app.launch()
     }
     // Test to check the cells count
     func test_SearchTextField()   {
@@ -39,7 +41,7 @@ final class SearchTunesUITests: XCTestCase {
         app.searchTextField.tap()
         app.searchTextField.typeText("Tarkan")
         sleep(1)
-        // Get an example cell. This code second cell.
+        // Get an example cell. This code i get second cell.
         let cell = app.tableView.cells.element(boundBy: 1)
         cell.tap()
         // Now test is in the DetailPage, wait 2seconds for navigation. Also wait for audio to load ( It takes approximately 70 seconds )
@@ -63,12 +65,6 @@ final class SearchTunesUITests: XCTestCase {
         // Now test is in the DetailPage, wait 2seconds for navigation. Also wait for audio to load ( It takes approximately 70 seconds )
         app.favButton.tap()
         
-    }
-    
-    func test_Example() {
-                
-
-
     }
 }
 

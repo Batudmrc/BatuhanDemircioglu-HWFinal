@@ -19,7 +19,7 @@ protocol HomePresenterProtocol {
 
 final class HomePresenter {
     // Timer to don't make too much requests
-    private var debounceInterval: TimeInterval = 0.5
+    private var debounceInterval: TimeInterval = 0.3
     private var debounceTimer: Timer?
     
     private var tracks: [Track] = []
