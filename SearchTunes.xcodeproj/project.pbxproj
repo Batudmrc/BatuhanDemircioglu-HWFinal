@@ -46,6 +46,7 @@
 		3B25F21E2A35B2D100553710 /* HomePresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B25F21D2A35B2D100553710 /* HomePresenterTests.swift */; };
 		3B3DA7F62A3382A7009E6443 /* HomePageCellInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3DA7F52A3382A7009E6443 /* HomePageCellInteractor.swift */; };
 		3B7C853E2A346B1600965CB5 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B7C853D2A346B1600965CB5 /* AudioManager.swift */; };
+		3BB77BB62A3B5DFD002F8597 /* HomePage+UISetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB77BB52A3B5DFD002F8597 /* HomePage+UISetup.swift */; };
 		3BE828772A391F4400FD5EEE /* DetailPage+UISetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE828762A391F4400FD5EEE /* DetailPage+UISetup.swift */; };
 		3BED4C022A3A6469004956B8 /* MockDetailPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BED4C012A3A6469004956B8 /* MockDetailPageController.swift */; };
 		3BED4C042A3A647F004956B8 /* MockDetailPageInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BED4C032A3A647F004956B8 /* MockDetailPageInteractor.swift */; };
@@ -120,6 +121,7 @@
 		3B25F21D2A35B2D100553710 /* HomePresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePresenterTests.swift; sourceTree = "<group>"; };
 		3B3DA7F52A3382A7009E6443 /* HomePageCellInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageCellInteractor.swift; sourceTree = "<group>"; };
 		3B7C853D2A346B1600965CB5 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
+		3BB77BB52A3B5DFD002F8597 /* HomePage+UISetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomePage+UISetup.swift"; sourceTree = "<group>"; };
 		3BE828762A391F4400FD5EEE /* DetailPage+UISetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DetailPage+UISetup.swift"; sourceTree = "<group>"; };
 		3BED4C012A3A6469004956B8 /* MockDetailPageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDetailPageController.swift; sourceTree = "<group>"; };
 		3BED4C032A3A647F004956B8 /* MockDetailPageInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDetailPageInteractor.swift; sourceTree = "<group>"; };
@@ -354,6 +356,7 @@
 			isa = PBXGroup;
 			children = (
 				3BE828762A391F4400FD5EEE /* DetailPage+UISetup.swift */,
+				3BB77BB52A3B5DFD002F8597 /* HomePage+UISetup.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -541,6 +544,7 @@
 				3B0D3BC72A2E7B860046D441 /* HomeViewController.swift in Sources */,
 				3BE828772A391F4400FD5EEE /* DetailPage+UISetup.swift in Sources */,
 				3B0D3C1A2A2FDAD90046D441 /* DetailViewInteractor.swift in Sources */,
+				3BB77BB62A3B5DFD002F8597 /* HomePage+UISetup.swift in Sources */,
 				3B0D3C002A2E9D310046D441 /* HomePageTableViewCell.swift in Sources */,
 				3B0D3C072A2F33340046D441 /* HomeInteractor.swift in Sources */,
 				3B0D3C142A2F78ED0046D441 /* SplashInteractor.swift in Sources */,
