@@ -14,7 +14,6 @@ class HomePageTableViewCellTests: XCTestCase {
     var tracks: Track!
     var presenter: HomePageTableViewCellPresenter!
     var interactor: MockHomePageTableViewCellInteractor!
-
     
     override func setUp() {
         super.setUp()
@@ -34,8 +33,10 @@ class HomePageTableViewCellTests: XCTestCase {
     func test_ImageLoaded() {
         XCTAssertFalse(interactor.loadImageCalled)
         XCTAssertFalse(interactor.setCoverImageCalled)
+        XCTAssertFalse(view.setArtistNameCalled)
         
         presenter.load()
+        presenter.setTrackName("")
         
         XCTAssertTrue(interactor.setCoverImageCalled)
         XCTAssertTrue(interactor.loadImageCalled)

@@ -41,13 +41,14 @@ final class SearchTunesUITests: XCTestCase {
         app.searchTextField.tap()
         app.searchTextField.typeText("Tarkan")
         sleep(1)
-        // Get an example cell. This code i get second cell.
+        // Get an example cell. This code I get second cell.
         let cell = app.tableView.cells.element(boundBy: 1)
         cell.tap()
         // Now test is in the DetailPage, wait 2seconds for navigation. Also wait for audio to load ( It takes approximately 70 seconds )
         sleep(2)
 //   ( Hocam müziğin yüklenmesi bazen 70 saniye bazen 140 sürüyor ama sonra çalıyor çaldıktan sonra bi 70 saniye daha testin sonuçlanması için bekleniyor hocam :) )
         app.playButton.tap()
+        // waitForExistance
         //sleep(1)
         
         XCTAssertNotEqual(app.remainingTimeLabel.label, "00:00")
@@ -64,7 +65,6 @@ final class SearchTunesUITests: XCTestCase {
         cell.tap()
         // Now test is in the DetailPage, wait 2seconds for navigation. Also wait for audio to load ( It takes approximately 70 seconds )
         app.favButton.tap()
-        
     }
 }
 

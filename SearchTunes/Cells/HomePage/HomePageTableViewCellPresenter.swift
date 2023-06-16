@@ -11,6 +11,9 @@ import AVFoundation
 protocol HomePageTableViewCellPresenterProtocol {
     func load()
     func playButtonTapped()
+    func setArtistName(_ text: String)
+    func setTrackName(_ text: String)
+    func setCollectionName(_ text: String)
 }
 
 final class HomePageTableViewCellPresenter {
@@ -31,6 +34,18 @@ final class HomePageTableViewCellPresenter {
 }
 
 extension HomePageTableViewCellPresenter: HomePageTableViewCellPresenterProtocol {
+    
+    func setCollectionName(_ text: String) {
+        view?.setCollectionName(text)
+    }
+    
+    func setArtistName(_ text: String) {
+        view?.setArtistName(text)
+    }
+    
+    func setTrackName(_ text: String) {
+        view?.setTrackName(text)
+    }
     
     func playButtonTapped() {
         guard let previewUrl = tracks.previewUrl, let audioURL = URL(string: previewUrl) else { return }
@@ -79,15 +94,14 @@ extension HomePageTableViewCellPresenter: HomePageTableViewCellPresenterProtocol
                 }
             }
         }
-        self.view?.setTrackName(self.tracks.trackName ?? "")
-        self.view?.setArtistName(self.tracks.artistName ?? "")
-        self.view?.setCollectionName(self.tracks.collectionName ?? "")
+        setTrackName(self.tracks.trackName!)
+        setArtistName(self.tracks.artistName!)
+        setCollectionName(self.tracks.collectionName!)
         if let trackPrice = self.tracks.trackPrice {
             self.view?.setPrice("$\(String(trackPrice))")
         } else {
             self.view?.setPrice(nil)
         }
-        
     }
 }
 

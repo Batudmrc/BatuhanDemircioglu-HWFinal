@@ -14,24 +14,24 @@ protocol HomeInteractorProtocol {
 }
 
 protocol HomeInteractorOutput: AnyObject {
-    func handleTrackResult(_ result: Result<SearchResult, any Error>)
+    func handleTrackResult(_ result: TrackResult)
 }
 
-//TODO: Bunu sonradan ayarla
-typealias TrackResult = Result<SearchResult, any Error>
+
 
 final class HomeInteractor {
     
     private let service: NetworkManagerProtocol = NetworkManager()
     weak var output: HomeInteractorOutput?
-    
 }
 
 extension HomeInteractor: HomeInteractorProtocol {
     func fetchTracks(with searchText: String) {
-        service.request(.getResults(searchText: searchText), completion: { [weak self] (result: Result<SearchResult, Error>) in
-            guard self != nil else { return }
-            self?.output?.handleTrackResult(result)
-        })
+        service.request(.getResults(searchText: searchText)) { [weak self] result in
+            guard let self = self else { return }
+            self.output?.handleTrackResult(result)
+        }
     }
 }
+
+typealias TrackResult = Result<SearchResult, any Error>

@@ -8,7 +8,7 @@
 import Foundation
 import Network
 
-@available(iOS 12.0, *)
+@available(iOS 12.0, *) // Bunu egale et info.plist
 public class NetworkUtility {
     public static func checkNetworkConnectivity() -> Bool {
         let pathMonitor = NWPathMonitor()

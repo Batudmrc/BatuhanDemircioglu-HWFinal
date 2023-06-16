@@ -24,7 +24,7 @@ enum HTTPMethod: String {
 public enum Endpoint<T: Decodable> {
     case getResults(searchText: String)
 }
-// https://itunes.apple.com/search?term=jack+johnson
+
 extension Endpoint: EndpointProtocol  {
     var method: HTTPMethod {
         switch self {
@@ -67,6 +67,5 @@ extension Endpoint: EndpointProtocol  {
         }
         print(request)
         return request
-
     }
 }

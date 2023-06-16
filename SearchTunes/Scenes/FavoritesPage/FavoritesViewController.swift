@@ -47,7 +47,6 @@ class FavoritesViewController: UIViewController {
         gradientLayer.endPoint = CGPoint(x: 0.5, y: 0.2)
         gradientLayer.frame = UIScreen.main.bounds  // Set the frame based on the screen's bounds
         myView.layer.insertSublayer(gradientLayer, at: 0)
-        
     }
 }
 
@@ -66,9 +65,9 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource, F
         
         if let favorite = presenter.favorite(at: indexPath.row) {
             // Configure the cell with favorite data
-            cell.setCollectionName(favorite.collectionName!)
-            cell.setArtistName(favorite.artistName!)
-            cell.setTrackName(favorite.trackName!)
+            cell.setCollectionName(favorite.collectionName ?? "")
+            cell.setArtistName(favorite.artistName ?? "")
+            cell.setTrackName(favorite.trackName ?? "")
             
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(playerImageViewTapped))
             cell.playerImageView.isUserInteractionEnabled = true
@@ -91,11 +90,26 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource, F
               let previewUrl = URL(string: previewUrlString) else {
             return
         }
+        
         let audioManager = AudioManager.shared
         if audioManager.isPlaying, let currentPlayingUrl = audioManager.currentPlayingUrl, currentPlayingUrl == previewUrl {
             audioManager.pauseAudio()
+            tappedView.image = UIImage(systemName: "play.circle.fill") // Update the image to play icon
+            animateButtonImageView(tappedView, with: UIImage(systemName: "play.circle.fill"))
         } else {
             audioManager.playAudio(from: previewUrl)
+            tappedView.image = UIImage(systemName: "pause.circle.fill") // Update the image to pause icon
+            animateButtonImageView(tappedView, with: UIImage(systemName: "pause.circle.fill"))
+        }
+    }
+
+    private func animateButtonImageView(_ imageView: UIImageView, with image: UIImage?) {
+        DispatchQueue.main.async {
+            UIView.transition(with: imageView, duration: 0.2, options: [.transitionCrossDissolve], animations: {
+                imageView.transform = CGAffineTransform(scaleX: 1.8, y: 1.8)
+                imageView.image = image
+                imageView.transform = .identity
+            }, completion: nil)
         }
     }
     

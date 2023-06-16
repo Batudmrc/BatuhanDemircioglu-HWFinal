@@ -16,7 +16,6 @@ extension NetworkManager {
                     completion(nil)
                     return
                 }
-                
                 completion(data)
             }
             task.resume()

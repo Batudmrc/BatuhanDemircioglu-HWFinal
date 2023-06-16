@@ -14,14 +14,14 @@ protocol HomeViewControllerProtocol: AnyObject {
     func setupEmptyView()
 }
 
-class HomeViewController: UIViewController {
-    
+final class HomeViewController: UIViewController {
+    // Research why myView is not declared weak by default
     @IBOutlet weak var topView: UIView!
     @IBOutlet var myView: UIView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
-    private let service: NetworkManagerProtocol = NetworkManager()
     
+    private let service: NetworkManagerProtocol = NetworkManager()
     var presenter: HomePresenterProtocol!
     let interactor: HomePageTableViewCellInteractorProtocol = HomePageTableViewCellInteractor()
     let messageLabel = UILabel()
@@ -88,13 +88,9 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension HomeViewController: HomeViewControllerProtocol, UISearchBarDelegate {
     
-    
-    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         presenter.searchBarTextDidChange(searchText)
     }
-    
-    
     
     func reloadData() {
         DispatchQueue.main.async { [weak self] in

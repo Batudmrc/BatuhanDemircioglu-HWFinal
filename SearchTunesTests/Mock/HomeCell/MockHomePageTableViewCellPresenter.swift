@@ -13,12 +13,22 @@ final class MockHomePageTableViewCellPresenter: HomePageTableViewCellPresenterPr
     var loadCalled = false
     var playButtonTappedCalled = false
     var setCoverImageCalled = false
-
+    
+    func setArtistName(_ text: String) {
+        
+    }
+    var setTrackNameCalled = false
+    func setTrackName(_ text: String) {
+        setTrackNameCalled = true
+    }   
+    
+    func setCollectionName(_ text: String) {
+        
+    }
     
     func load() {
         setCoverImageCalled = true
         loadCalled = true
-        
     }
     
     func playButtonTapped() {

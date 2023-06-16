@@ -71,8 +71,4 @@ extension HomeViewController {
             textField.autocorrectionType = .no
         }
     }
-    
-    
-    
-    
 }

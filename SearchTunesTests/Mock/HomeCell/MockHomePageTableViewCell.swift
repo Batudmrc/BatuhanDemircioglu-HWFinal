@@ -13,7 +13,6 @@ class MockHomePageTableViewCell: HomePageTableViewCellProtocol {
     
     var setPlayerImageCalled = false
     var setCollectionNameCalled = false
-
     var setTrackNameCalled = false
     var setPriceCalled = false
     var updatePlayButtonImageCalled = false

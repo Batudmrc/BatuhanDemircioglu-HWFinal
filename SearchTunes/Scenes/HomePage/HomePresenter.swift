@@ -78,14 +78,19 @@ extension HomePresenter: HomeInteractorOutput {
     func handleTrackResult(_ result: Result<SearchResult, Error>) {
         switch result {
         case .success(let tracks):
-            let filteredResults = tracks.results!.filter { track in
-                return track.kind == "song"
+            if let results = tracks.results {
+                let filteredResults = results.filter { track in
+                    return track.kind == "song"
+                }
+                self.tracks = filteredResults
+                view?.reloadData()
+            } else {
+                // Handle the case where results is nil
             }
-            self.tracks = filteredResults
-            view?.reloadData()
         case .failure(let failure):
             //TODO: showError
             print(failure)
         }
     }
+
 }

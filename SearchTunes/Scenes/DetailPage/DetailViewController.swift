@@ -176,7 +176,7 @@ extension DetailViewController: DetailViewControllerProtocol {
         }
         present(activityViewController, animated: true, completion: nil)
     }
-    
+
     @objc func playButtonTapped() {
         presenter.playButtonTapped()
     }
