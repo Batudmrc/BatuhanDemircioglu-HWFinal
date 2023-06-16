@@ -166,7 +166,7 @@ extension DetailViewController: DetailViewControllerProtocol {
             }
         }
     }
-
+    
     //MARK: Gesture functions
     @objc func shareButtonTapped() {
         guard let url = URL(string: (track?.trackViewUrl)!) else { return }
@@ -176,7 +176,7 @@ extension DetailViewController: DetailViewControllerProtocol {
         }
         present(activityViewController, animated: true, completion: nil)
     }
-
+    
     @objc func playButtonTapped() {
         presenter.playButtonTapped()
     }
@@ -203,7 +203,6 @@ extension DetailViewController: DetailViewControllerProtocol {
             } else {
                 self.favoriteButtonImageView.tintColor = .white
             }
-            
             UIView.transition(with: self.favoriteButtonImageView, duration: 0.2, options: [.transitionCrossDissolve], animations: {
                 self.favoriteButtonImageView.transform = CGAffineTransform(scaleX: 1.8, y: 1.8)
                 self.favoriteButtonImageView.image = image
@@ -211,7 +210,7 @@ extension DetailViewController: DetailViewControllerProtocol {
             }, completion: nil)
         }
     }
-    
+    // Turning image Data to UIImage
     func setTrackImage(_ imageData: Data?) {
         if let imageData = imageData {
             if let image = UIImage(data: imageData) {

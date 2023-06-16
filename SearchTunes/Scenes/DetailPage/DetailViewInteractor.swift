@@ -41,7 +41,7 @@ extension DetailViewInteractor: DetailViewInteractorProtocol {
             do {
                 let matchingItems = try context.fetch(fetchRequest)
                 completion(matchingItems)
-                self.output?.favoriteTracksOutput(result: matchingItems) // Notify the presenter with the fetched favorite tracks
+                self.output?.favoriteTracksOutput(result: matchingItems)
             } catch {
                 print("Failed to fetch favorite tracks: \(error)")
                 completion([])

@@ -8,7 +8,6 @@
 import Foundation
 import NetworkPackage
 
-//MARK: Presenter -> InteractorProtocol
 protocol HomeInteractorProtocol {
     func fetchTracks(with searchText: String)
 }
@@ -16,8 +15,6 @@ protocol HomeInteractorProtocol {
 protocol HomeInteractorOutput: AnyObject {
     func handleTrackResult(_ result: TrackResult)
 }
-
-
 
 final class HomeInteractor {
     

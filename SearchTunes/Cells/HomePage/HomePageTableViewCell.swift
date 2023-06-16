@@ -101,7 +101,6 @@ extension HomePageTableViewCell: HomePageTableViewCellProtocol {
         audioPlayer?.stop()
     }
     
-    
     func showPlayButtonLoading() {
         spinner.backgroundColor = .white
         spinner.tintColor = .white

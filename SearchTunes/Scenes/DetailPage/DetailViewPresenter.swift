@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import CoreData // importing this for context NSManagedObjectContext only
+import CoreData // importing this for context NSManagedObjectContext only. All the CoreData related operations were made in interactor
 import AVFoundation
 
 protocol DetailViewPresenterProtocol {

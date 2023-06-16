@@ -65,7 +65,6 @@ extension Endpoint: EndpointProtocol  {
                 request.setValue(value, forHTTPHeaderField: key)
             }
         }
-        print(request)
         return request
     }
 }
